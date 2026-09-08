@@ -1,11 +1,12 @@
 blueprint:
-  name: Awqaat MT - Prayer Lights (7 slots, overlap-safe, circadian)
+  name: Awqaat MT - Prayer Lights (7 slots, overlap-safe, circadian, pause/skip)
   description: A dedicated lights blueprint for the 5 daily Salaah plus Jumuah and Taraweeh. Each of the
     7 slots independently chooses how it turns ON and OFF (minutes before/after a time sensor, and/or
-    a different trigger entity such as a door or amplifier, with optional conditions on the trigger-entity
-    option). All 7 slots share one ON action and one OFF action. A shared Counter helper keeps overlapping
-    slots overlap-safe. Optionally keeps a set of lights on a circadian colour-temperature curve based
-    on the sun's position while anything is on.
+    a trigger entity, with optional conditions on the trigger-entity option). All 7 slots share one ON
+    action and one OFF action, kept overlap-safe by a shared Counter helper. Dhuhr can exclude Fridays;
+    Jumuah only ever fires on Fridays. Each slot (plus global) has one-shot 'skip next ON/OFF' helpers,
+    and one global pause Timer holds everything — ON, OFF, circadian — until it finishes. Optionally keeps
+    target light(s) on a circadian colour-temperature curve.
   domain: automation
   input:
     fajr_section:
@@ -58,6 +59,15 @@ blueprint:
           default: []
           selector:
             condition: {}
+        fajr_skip_next_on_entity:
+          name: Fajr - 'skip next ON' helper
+          description: An input_boolean helper. When it's on, the very next ON for this slot is skipped
+            once, then this clears itself automatically.
+          default: null
+          selector:
+            entity:
+              filter:
+              - domain: input_boolean
         fajr_off_use_time:
           name: Fajr OFF - use minutes after
           default: true
@@ -102,6 +112,15 @@ blueprint:
           default: []
           selector:
             condition: {}
+        fajr_skip_next_off_entity:
+          name: Fajr - 'skip next OFF' helper
+          description: An input_boolean helper. When it's on, the very next OFF for this slot is skipped
+            once, then this clears itself automatically.
+          default: null
+          selector:
+            entity:
+              filter:
+              - domain: input_boolean
     dhuhr_section:
       name: Dhuhr
       collapsed: true
@@ -153,6 +172,21 @@ blueprint:
           default: []
           selector:
             condition: {}
+        dhuhr_exclude_fridays:
+          name: Exclude Fridays
+          description: If on, Dhuhr does nothing at all on Fridays (use this if Jumuah covers Friday instead).
+          default: false
+          selector:
+            boolean: {}
+        dhuhr_skip_next_on_entity:
+          name: Dhuhr - 'skip next ON' helper
+          description: An input_boolean helper. When it's on, the very next ON for this slot is skipped
+            once, then this clears itself automatically.
+          default: null
+          selector:
+            entity:
+              filter:
+              - domain: input_boolean
         dhuhr_off_use_time:
           name: Dhuhr OFF - use minutes after
           default: true
@@ -197,6 +231,15 @@ blueprint:
           default: []
           selector:
             condition: {}
+        dhuhr_skip_next_off_entity:
+          name: Dhuhr - 'skip next OFF' helper
+          description: An input_boolean helper. When it's on, the very next OFF for this slot is skipped
+            once, then this clears itself automatically.
+          default: null
+          selector:
+            entity:
+              filter:
+              - domain: input_boolean
     asr_section:
       name: Asr
       collapsed: true
@@ -247,6 +290,15 @@ blueprint:
           default: []
           selector:
             condition: {}
+        asr_skip_next_on_entity:
+          name: Asr - 'skip next ON' helper
+          description: An input_boolean helper. When it's on, the very next ON for this slot is skipped
+            once, then this clears itself automatically.
+          default: null
+          selector:
+            entity:
+              filter:
+              - domain: input_boolean
         asr_off_use_time:
           name: Asr OFF - use minutes after
           default: true
@@ -291,6 +343,15 @@ blueprint:
           default: []
           selector:
             condition: {}
+        asr_skip_next_off_entity:
+          name: Asr - 'skip next OFF' helper
+          description: An input_boolean helper. When it's on, the very next OFF for this slot is skipped
+            once, then this clears itself automatically.
+          default: null
+          selector:
+            entity:
+              filter:
+              - domain: input_boolean
     maghrib_section:
       name: Maghrib
       collapsed: true
@@ -342,6 +403,15 @@ blueprint:
           default: []
           selector:
             condition: {}
+        maghrib_skip_next_on_entity:
+          name: Maghrib - 'skip next ON' helper
+          description: An input_boolean helper. When it's on, the very next ON for this slot is skipped
+            once, then this clears itself automatically.
+          default: null
+          selector:
+            entity:
+              filter:
+              - domain: input_boolean
         maghrib_off_use_time:
           name: Maghrib OFF - use minutes after
           default: true
@@ -386,6 +456,15 @@ blueprint:
           default: []
           selector:
             condition: {}
+        maghrib_skip_next_off_entity:
+          name: Maghrib - 'skip next OFF' helper
+          description: An input_boolean helper. When it's on, the very next OFF for this slot is skipped
+            once, then this clears itself automatically.
+          default: null
+          selector:
+            entity:
+              filter:
+              - domain: input_boolean
     isha_section:
       name: Isha
       collapsed: true
@@ -436,6 +515,15 @@ blueprint:
           default: []
           selector:
             condition: {}
+        isha_skip_next_on_entity:
+          name: Isha - 'skip next ON' helper
+          description: An input_boolean helper. When it's on, the very next ON for this slot is skipped
+            once, then this clears itself automatically.
+          default: null
+          selector:
+            entity:
+              filter:
+              - domain: input_boolean
         isha_off_use_time:
           name: Isha OFF - use minutes after
           default: true
@@ -480,6 +568,15 @@ blueprint:
           default: []
           selector:
             condition: {}
+        isha_skip_next_off_entity:
+          name: Isha - 'skip next OFF' helper
+          description: An input_boolean helper. When it's on, the very next OFF for this slot is skipped
+            once, then this clears itself automatically.
+          default: null
+          selector:
+            entity:
+              filter:
+              - domain: input_boolean
     jumuah_section:
       name: Jumuah
       collapsed: true
@@ -531,6 +628,15 @@ blueprint:
           default: []
           selector:
             condition: {}
+        jumuah_skip_next_on_entity:
+          name: Jumuah - 'skip next ON' helper
+          description: An input_boolean helper. When it's on, the very next ON for this slot is skipped
+            once, then this clears itself automatically.
+          default: null
+          selector:
+            entity:
+              filter:
+              - domain: input_boolean
         jumuah_off_use_time:
           name: Jumuah OFF - use minutes after
           default: true
@@ -575,6 +681,15 @@ blueprint:
           default: []
           selector:
             condition: {}
+        jumuah_skip_next_off_entity:
+          name: Jumuah - 'skip next OFF' helper
+          description: An input_boolean helper. When it's on, the very next OFF for this slot is skipped
+            once, then this clears itself automatically.
+          default: null
+          selector:
+            entity:
+              filter:
+              - domain: input_boolean
     taraweeh_section:
       name: Taraweeh
       collapsed: true
@@ -626,6 +741,15 @@ blueprint:
           default: []
           selector:
             condition: {}
+        taraweeh_skip_next_on_entity:
+          name: Taraweeh - 'skip next ON' helper
+          description: An input_boolean helper. When it's on, the very next ON for this slot is skipped
+            once, then this clears itself automatically.
+          default: null
+          selector:
+            entity:
+              filter:
+              - domain: input_boolean
         taraweeh_off_use_time:
           name: Taraweeh OFF - use minutes after
           default: true
@@ -670,8 +794,17 @@ blueprint:
           default: []
           selector:
             condition: {}
+        taraweeh_skip_next_off_entity:
+          name: Taraweeh - 'skip next OFF' helper
+          description: An input_boolean helper. When it's on, the very next OFF for this slot is skipped
+            once, then this clears itself automatically.
+          default: null
+          selector:
+            entity:
+              filter:
+              - domain: input_boolean
     shared_section:
-      name: Shared ON/OFF actions and overlap safety
+      name: Shared ON/OFF actions, pause, and overlap safety
       icon: mdi:toggle-switch
       input:
         counter_entity:
@@ -696,6 +829,32 @@ blueprint:
           default: []
           selector:
             action: {}
+        skip_next_on_global_entity:
+          name: Global 'skip next ON' helper
+          description: An input_boolean helper. When on, the very next ON across ANY slot is skipped once,
+            then clears itself.
+          selector:
+            entity:
+              filter:
+              - domain: input_boolean
+        skip_next_off_global_entity:
+          name: Global 'skip next OFF' helper
+          description: An input_boolean helper. When on, the very next OFF across ANY slot is skipped
+            once, then clears itself.
+          selector:
+            entity:
+              filter:
+              - domain: input_boolean
+        pause_timer_entity:
+          name: Pause timer helper
+          description: A Timer helper. While it's running, this automation does nothing at all — no ON,
+            no OFF, no circadian update, for any slot — whatever state things are in just holds. Resumes
+            normally on its own once the timer finishes; no other helper needed. Start/cancel it directly
+            from its own dashboard card.
+          selector:
+            entity:
+              filter:
+              - domain: timer
         circadian_enable:
           name: Follow circadian rhythm
           description: If on, the target light(s) below get their colour temperature set from the sun's
@@ -942,28 +1101,64 @@ variables:
   circadian_enable: !input 'circadian_enable'
   circadian_min_cct: !input 'circadian_min_cct'
   circadian_max_cct: !input 'circadian_max_cct'
+  pause_timer_entity: !input 'pause_timer_entity'
+  skip_next_on_global_entity: !input 'skip_next_on_global_entity'
+  skip_next_off_global_entity: !input 'skip_next_off_global_entity'
+  dhuhr_exclude_fridays: !input 'dhuhr_exclude_fridays'
+  fajr_skip_next_on_entity: !input 'fajr_skip_next_on_entity'
+  fajr_skip_next_off_entity: !input 'fajr_skip_next_off_entity'
+  dhuhr_skip_next_on_entity: !input 'dhuhr_skip_next_on_entity'
+  dhuhr_skip_next_off_entity: !input 'dhuhr_skip_next_off_entity'
+  asr_skip_next_on_entity: !input 'asr_skip_next_on_entity'
+  asr_skip_next_off_entity: !input 'asr_skip_next_off_entity'
+  maghrib_skip_next_on_entity: !input 'maghrib_skip_next_on_entity'
+  maghrib_skip_next_off_entity: !input 'maghrib_skip_next_off_entity'
+  isha_skip_next_on_entity: !input 'isha_skip_next_on_entity'
+  isha_skip_next_off_entity: !input 'isha_skip_next_off_entity'
+  jumuah_skip_next_on_entity: !input 'jumuah_skip_next_on_entity'
+  jumuah_skip_next_off_entity: !input 'jumuah_skip_next_off_entity'
+  taraweeh_skip_next_on_entity: !input 'taraweeh_skip_next_on_entity'
+  taraweeh_skip_next_off_entity: !input 'taraweeh_skip_next_off_entity'
 action:
 - choose:
   - conditions:
     - condition: template
-      value_template: '{{ trigger.id.endswith(''_on_time'') }}'
+      value_template: '{{ trigger.id == ''fajr_on_time'' }}'
     sequence: &id001
-    - action: counter.increment
-      target:
-        entity_id: !input 'counter_entity'
-    - choose:
-      - conditions: []
-        sequence: !input 'on_action'
+    - condition: template
+      value_template: '{{ true }}'
+    - condition: template
+      value_template: '{{ not (pause_timer_entity not in [none,''''] and states(pause_timer_entity) ==
+        ''active'') }}'
     - if:
       - condition: template
-        value_template: '{{ circadian_enable }}'
+        value_template: '{{ ((fajr_skip_next_on_entity not in [none,''''] and states(fajr_skip_next_on_entity)
+          == ''on'') or ((skip_next_on_global_entity) not in [none,''''] and states(skip_next_on_global_entity)
+          == ''on'')) }}'
       then:
-      - action: light.turn_on
-        target: !input 'circadian_target'
-        data:
-          color_temp_kelvin: '{% set elev = state_attr(''sun.sun'', ''elevation'') | float(0) %}{% set
-            frac = ((elev - (-4)) / (60 - (-4))) %}{% set frac = [[frac, 0] | max, 1] | min %}{{ (circadian_min_cct
-            + frac * (circadian_max_cct - circadian_min_cct)) | round(0) | int }}'
+      - action: input_boolean.turn_off
+        target:
+          entity_id: !input 'fajr_skip_next_on_entity'
+      - action: input_boolean.turn_off
+        target:
+          entity_id: !input 'skip_next_on_global_entity'
+      else:
+      - action: counter.increment
+        target:
+          entity_id: !input 'counter_entity'
+      - choose:
+        - conditions: []
+          sequence: !input 'on_action'
+      - if:
+        - condition: template
+          value_template: '{{ circadian_enable }}'
+        then:
+        - action: light.turn_on
+          target: !input 'circadian_target'
+          data:
+            color_temp_kelvin: '{% set elev = state_attr(''sun.sun'', ''elevation'') | float(0) %}{% set
+              frac = ((elev - (-4)) / (60 - (-4))) %}{% set frac = [[frac, 0] | max, 1] | min %}{{ (circadian_min_cct
+              + frac * (circadian_max_cct - circadian_min_cct)) | round(0) | int }}'
   - conditions:
     - condition: template
       value_template: '{{ trigger.id == ''fajr_on_trigger'' }}'
@@ -972,53 +1167,35 @@ action:
     sequence: *id001
   - conditions:
     - condition: template
-      value_template: '{{ trigger.id == ''dhuhr_on_trigger'' }}'
-    - condition: and
-      conditions: !input 'dhuhr_on_conditions'
-    sequence: *id001
-  - conditions:
-    - condition: template
-      value_template: '{{ trigger.id == ''asr_on_trigger'' }}'
-    - condition: and
-      conditions: !input 'asr_on_conditions'
-    sequence: *id001
-  - conditions:
-    - condition: template
-      value_template: '{{ trigger.id == ''maghrib_on_trigger'' }}'
-    - condition: and
-      conditions: !input 'maghrib_on_conditions'
-    sequence: *id001
-  - conditions:
-    - condition: template
-      value_template: '{{ trigger.id == ''isha_on_trigger'' }}'
-    - condition: and
-      conditions: !input 'isha_on_conditions'
-    sequence: *id001
-  - conditions:
-    - condition: template
-      value_template: '{{ trigger.id == ''jumuah_on_trigger'' }}'
-    - condition: and
-      conditions: !input 'jumuah_on_conditions'
-    sequence: *id001
-  - conditions:
-    - condition: template
-      value_template: '{{ trigger.id == ''taraweeh_on_trigger'' }}'
-    - condition: and
-      conditions: !input 'taraweeh_on_conditions'
-    sequence: *id001
-  - conditions:
-    - condition: template
-      value_template: '{{ trigger.id.endswith(''_off_time'') }}'
+      value_template: '{{ trigger.id == ''fajr_off_time'' }}'
     sequence: &id002
-    - action: counter.decrement
-      target:
+    - condition: template
+      value_template: '{{ true }}'
+    - condition: template
+      value_template: '{{ not (pause_timer_entity not in [none,''''] and states(pause_timer_entity) ==
+        ''active'') }}'
+    - if:
+      - condition: template
+        value_template: '{{ ((fajr_skip_next_off_entity not in [none,''''] and states(fajr_skip_next_off_entity)
+          == ''on'') or ((skip_next_off_global_entity) not in [none,''''] and states(skip_next_off_global_entity)
+          == ''on'')) }}'
+      then:
+      - action: input_boolean.turn_off
+        target:
+          entity_id: !input 'fajr_skip_next_off_entity'
+      - action: input_boolean.turn_off
+        target:
+          entity_id: !input 'skip_next_off_global_entity'
+      else:
+      - action: counter.decrement
+        target:
+          entity_id: !input 'counter_entity'
+      - condition: numeric_state
         entity_id: !input 'counter_entity'
-    - condition: numeric_state
-      entity_id: !input 'counter_entity'
-      below: 1
-    - choose:
-      - conditions: []
-        sequence: !input 'off_action'
+        below: 1
+      - choose:
+        - conditions: []
+          sequence: !input 'off_action'
   - conditions:
     - condition: template
       value_template: '{{ trigger.id == ''fajr_off_trigger'' }}'
@@ -1027,44 +1204,497 @@ action:
     sequence: *id002
   - conditions:
     - condition: template
+      value_template: '{{ trigger.id == ''dhuhr_on_time'' }}'
+    sequence: &id003
+    - condition: template
+      value_template: '{{ (not (dhuhr_exclude_fridays and now().weekday() == 4)) }}'
+    - condition: template
+      value_template: '{{ not (pause_timer_entity not in [none,''''] and states(pause_timer_entity) ==
+        ''active'') }}'
+    - if:
+      - condition: template
+        value_template: '{{ ((dhuhr_skip_next_on_entity not in [none,''''] and states(dhuhr_skip_next_on_entity)
+          == ''on'') or ((skip_next_on_global_entity) not in [none,''''] and states(skip_next_on_global_entity)
+          == ''on'')) }}'
+      then:
+      - action: input_boolean.turn_off
+        target:
+          entity_id: !input 'dhuhr_skip_next_on_entity'
+      - action: input_boolean.turn_off
+        target:
+          entity_id: !input 'skip_next_on_global_entity'
+      else:
+      - action: counter.increment
+        target:
+          entity_id: !input 'counter_entity'
+      - choose:
+        - conditions: []
+          sequence: !input 'on_action'
+      - if:
+        - condition: template
+          value_template: '{{ circadian_enable }}'
+        then:
+        - action: light.turn_on
+          target: !input 'circadian_target'
+          data:
+            color_temp_kelvin: '{% set elev = state_attr(''sun.sun'', ''elevation'') | float(0) %}{% set
+              frac = ((elev - (-4)) / (60 - (-4))) %}{% set frac = [[frac, 0] | max, 1] | min %}{{ (circadian_min_cct
+              + frac * (circadian_max_cct - circadian_min_cct)) | round(0) | int }}'
+  - conditions:
+    - condition: template
+      value_template: '{{ trigger.id == ''dhuhr_on_trigger'' }}'
+    - condition: and
+      conditions: !input 'dhuhr_on_conditions'
+    sequence: *id003
+  - conditions:
+    - condition: template
+      value_template: '{{ trigger.id == ''dhuhr_off_time'' }}'
+    sequence: &id004
+    - condition: template
+      value_template: '{{ (not (dhuhr_exclude_fridays and now().weekday() == 4)) }}'
+    - condition: template
+      value_template: '{{ not (pause_timer_entity not in [none,''''] and states(pause_timer_entity) ==
+        ''active'') }}'
+    - if:
+      - condition: template
+        value_template: '{{ ((dhuhr_skip_next_off_entity not in [none,''''] and states(dhuhr_skip_next_off_entity)
+          == ''on'') or ((skip_next_off_global_entity) not in [none,''''] and states(skip_next_off_global_entity)
+          == ''on'')) }}'
+      then:
+      - action: input_boolean.turn_off
+        target:
+          entity_id: !input 'dhuhr_skip_next_off_entity'
+      - action: input_boolean.turn_off
+        target:
+          entity_id: !input 'skip_next_off_global_entity'
+      else:
+      - action: counter.decrement
+        target:
+          entity_id: !input 'counter_entity'
+      - condition: numeric_state
+        entity_id: !input 'counter_entity'
+        below: 1
+      - choose:
+        - conditions: []
+          sequence: !input 'off_action'
+  - conditions:
+    - condition: template
       value_template: '{{ trigger.id == ''dhuhr_off_trigger'' }}'
     - condition: and
       conditions: !input 'dhuhr_off_conditions'
-    sequence: *id002
+    sequence: *id004
+  - conditions:
+    - condition: template
+      value_template: '{{ trigger.id == ''asr_on_time'' }}'
+    sequence: &id005
+    - condition: template
+      value_template: '{{ true }}'
+    - condition: template
+      value_template: '{{ not (pause_timer_entity not in [none,''''] and states(pause_timer_entity) ==
+        ''active'') }}'
+    - if:
+      - condition: template
+        value_template: '{{ ((asr_skip_next_on_entity not in [none,''''] and states(asr_skip_next_on_entity)
+          == ''on'') or ((skip_next_on_global_entity) not in [none,''''] and states(skip_next_on_global_entity)
+          == ''on'')) }}'
+      then:
+      - action: input_boolean.turn_off
+        target:
+          entity_id: !input 'asr_skip_next_on_entity'
+      - action: input_boolean.turn_off
+        target:
+          entity_id: !input 'skip_next_on_global_entity'
+      else:
+      - action: counter.increment
+        target:
+          entity_id: !input 'counter_entity'
+      - choose:
+        - conditions: []
+          sequence: !input 'on_action'
+      - if:
+        - condition: template
+          value_template: '{{ circadian_enable }}'
+        then:
+        - action: light.turn_on
+          target: !input 'circadian_target'
+          data:
+            color_temp_kelvin: '{% set elev = state_attr(''sun.sun'', ''elevation'') | float(0) %}{% set
+              frac = ((elev - (-4)) / (60 - (-4))) %}{% set frac = [[frac, 0] | max, 1] | min %}{{ (circadian_min_cct
+              + frac * (circadian_max_cct - circadian_min_cct)) | round(0) | int }}'
+  - conditions:
+    - condition: template
+      value_template: '{{ trigger.id == ''asr_on_trigger'' }}'
+    - condition: and
+      conditions: !input 'asr_on_conditions'
+    sequence: *id005
+  - conditions:
+    - condition: template
+      value_template: '{{ trigger.id == ''asr_off_time'' }}'
+    sequence: &id006
+    - condition: template
+      value_template: '{{ true }}'
+    - condition: template
+      value_template: '{{ not (pause_timer_entity not in [none,''''] and states(pause_timer_entity) ==
+        ''active'') }}'
+    - if:
+      - condition: template
+        value_template: '{{ ((asr_skip_next_off_entity not in [none,''''] and states(asr_skip_next_off_entity)
+          == ''on'') or ((skip_next_off_global_entity) not in [none,''''] and states(skip_next_off_global_entity)
+          == ''on'')) }}'
+      then:
+      - action: input_boolean.turn_off
+        target:
+          entity_id: !input 'asr_skip_next_off_entity'
+      - action: input_boolean.turn_off
+        target:
+          entity_id: !input 'skip_next_off_global_entity'
+      else:
+      - action: counter.decrement
+        target:
+          entity_id: !input 'counter_entity'
+      - condition: numeric_state
+        entity_id: !input 'counter_entity'
+        below: 1
+      - choose:
+        - conditions: []
+          sequence: !input 'off_action'
   - conditions:
     - condition: template
       value_template: '{{ trigger.id == ''asr_off_trigger'' }}'
     - condition: and
       conditions: !input 'asr_off_conditions'
-    sequence: *id002
+    sequence: *id006
+  - conditions:
+    - condition: template
+      value_template: '{{ trigger.id == ''maghrib_on_time'' }}'
+    sequence: &id007
+    - condition: template
+      value_template: '{{ true }}'
+    - condition: template
+      value_template: '{{ not (pause_timer_entity not in [none,''''] and states(pause_timer_entity) ==
+        ''active'') }}'
+    - if:
+      - condition: template
+        value_template: '{{ ((maghrib_skip_next_on_entity not in [none,''''] and states(maghrib_skip_next_on_entity)
+          == ''on'') or ((skip_next_on_global_entity) not in [none,''''] and states(skip_next_on_global_entity)
+          == ''on'')) }}'
+      then:
+      - action: input_boolean.turn_off
+        target:
+          entity_id: !input 'maghrib_skip_next_on_entity'
+      - action: input_boolean.turn_off
+        target:
+          entity_id: !input 'skip_next_on_global_entity'
+      else:
+      - action: counter.increment
+        target:
+          entity_id: !input 'counter_entity'
+      - choose:
+        - conditions: []
+          sequence: !input 'on_action'
+      - if:
+        - condition: template
+          value_template: '{{ circadian_enable }}'
+        then:
+        - action: light.turn_on
+          target: !input 'circadian_target'
+          data:
+            color_temp_kelvin: '{% set elev = state_attr(''sun.sun'', ''elevation'') | float(0) %}{% set
+              frac = ((elev - (-4)) / (60 - (-4))) %}{% set frac = [[frac, 0] | max, 1] | min %}{{ (circadian_min_cct
+              + frac * (circadian_max_cct - circadian_min_cct)) | round(0) | int }}'
+  - conditions:
+    - condition: template
+      value_template: '{{ trigger.id == ''maghrib_on_trigger'' }}'
+    - condition: and
+      conditions: !input 'maghrib_on_conditions'
+    sequence: *id007
+  - conditions:
+    - condition: template
+      value_template: '{{ trigger.id == ''maghrib_off_time'' }}'
+    sequence: &id008
+    - condition: template
+      value_template: '{{ true }}'
+    - condition: template
+      value_template: '{{ not (pause_timer_entity not in [none,''''] and states(pause_timer_entity) ==
+        ''active'') }}'
+    - if:
+      - condition: template
+        value_template: '{{ ((maghrib_skip_next_off_entity not in [none,''''] and states(maghrib_skip_next_off_entity)
+          == ''on'') or ((skip_next_off_global_entity) not in [none,''''] and states(skip_next_off_global_entity)
+          == ''on'')) }}'
+      then:
+      - action: input_boolean.turn_off
+        target:
+          entity_id: !input 'maghrib_skip_next_off_entity'
+      - action: input_boolean.turn_off
+        target:
+          entity_id: !input 'skip_next_off_global_entity'
+      else:
+      - action: counter.decrement
+        target:
+          entity_id: !input 'counter_entity'
+      - condition: numeric_state
+        entity_id: !input 'counter_entity'
+        below: 1
+      - choose:
+        - conditions: []
+          sequence: !input 'off_action'
   - conditions:
     - condition: template
       value_template: '{{ trigger.id == ''maghrib_off_trigger'' }}'
     - condition: and
       conditions: !input 'maghrib_off_conditions'
-    sequence: *id002
+    sequence: *id008
+  - conditions:
+    - condition: template
+      value_template: '{{ trigger.id == ''isha_on_time'' }}'
+    sequence: &id009
+    - condition: template
+      value_template: '{{ true }}'
+    - condition: template
+      value_template: '{{ not (pause_timer_entity not in [none,''''] and states(pause_timer_entity) ==
+        ''active'') }}'
+    - if:
+      - condition: template
+        value_template: '{{ ((isha_skip_next_on_entity not in [none,''''] and states(isha_skip_next_on_entity)
+          == ''on'') or ((skip_next_on_global_entity) not in [none,''''] and states(skip_next_on_global_entity)
+          == ''on'')) }}'
+      then:
+      - action: input_boolean.turn_off
+        target:
+          entity_id: !input 'isha_skip_next_on_entity'
+      - action: input_boolean.turn_off
+        target:
+          entity_id: !input 'skip_next_on_global_entity'
+      else:
+      - action: counter.increment
+        target:
+          entity_id: !input 'counter_entity'
+      - choose:
+        - conditions: []
+          sequence: !input 'on_action'
+      - if:
+        - condition: template
+          value_template: '{{ circadian_enable }}'
+        then:
+        - action: light.turn_on
+          target: !input 'circadian_target'
+          data:
+            color_temp_kelvin: '{% set elev = state_attr(''sun.sun'', ''elevation'') | float(0) %}{% set
+              frac = ((elev - (-4)) / (60 - (-4))) %}{% set frac = [[frac, 0] | max, 1] | min %}{{ (circadian_min_cct
+              + frac * (circadian_max_cct - circadian_min_cct)) | round(0) | int }}'
+  - conditions:
+    - condition: template
+      value_template: '{{ trigger.id == ''isha_on_trigger'' }}'
+    - condition: and
+      conditions: !input 'isha_on_conditions'
+    sequence: *id009
+  - conditions:
+    - condition: template
+      value_template: '{{ trigger.id == ''isha_off_time'' }}'
+    sequence: &id010
+    - condition: template
+      value_template: '{{ true }}'
+    - condition: template
+      value_template: '{{ not (pause_timer_entity not in [none,''''] and states(pause_timer_entity) ==
+        ''active'') }}'
+    - if:
+      - condition: template
+        value_template: '{{ ((isha_skip_next_off_entity not in [none,''''] and states(isha_skip_next_off_entity)
+          == ''on'') or ((skip_next_off_global_entity) not in [none,''''] and states(skip_next_off_global_entity)
+          == ''on'')) }}'
+      then:
+      - action: input_boolean.turn_off
+        target:
+          entity_id: !input 'isha_skip_next_off_entity'
+      - action: input_boolean.turn_off
+        target:
+          entity_id: !input 'skip_next_off_global_entity'
+      else:
+      - action: counter.decrement
+        target:
+          entity_id: !input 'counter_entity'
+      - condition: numeric_state
+        entity_id: !input 'counter_entity'
+        below: 1
+      - choose:
+        - conditions: []
+          sequence: !input 'off_action'
   - conditions:
     - condition: template
       value_template: '{{ trigger.id == ''isha_off_trigger'' }}'
     - condition: and
       conditions: !input 'isha_off_conditions'
-    sequence: *id002
+    sequence: *id010
+  - conditions:
+    - condition: template
+      value_template: '{{ trigger.id == ''jumuah_on_time'' }}'
+    sequence: &id011
+    - condition: template
+      value_template: '{{ (now().weekday() == 4) }}'
+    - condition: template
+      value_template: '{{ not (pause_timer_entity not in [none,''''] and states(pause_timer_entity) ==
+        ''active'') }}'
+    - if:
+      - condition: template
+        value_template: '{{ ((jumuah_skip_next_on_entity not in [none,''''] and states(jumuah_skip_next_on_entity)
+          == ''on'') or ((skip_next_on_global_entity) not in [none,''''] and states(skip_next_on_global_entity)
+          == ''on'')) }}'
+      then:
+      - action: input_boolean.turn_off
+        target:
+          entity_id: !input 'jumuah_skip_next_on_entity'
+      - action: input_boolean.turn_off
+        target:
+          entity_id: !input 'skip_next_on_global_entity'
+      else:
+      - action: counter.increment
+        target:
+          entity_id: !input 'counter_entity'
+      - choose:
+        - conditions: []
+          sequence: !input 'on_action'
+      - if:
+        - condition: template
+          value_template: '{{ circadian_enable }}'
+        then:
+        - action: light.turn_on
+          target: !input 'circadian_target'
+          data:
+            color_temp_kelvin: '{% set elev = state_attr(''sun.sun'', ''elevation'') | float(0) %}{% set
+              frac = ((elev - (-4)) / (60 - (-4))) %}{% set frac = [[frac, 0] | max, 1] | min %}{{ (circadian_min_cct
+              + frac * (circadian_max_cct - circadian_min_cct)) | round(0) | int }}'
+  - conditions:
+    - condition: template
+      value_template: '{{ trigger.id == ''jumuah_on_trigger'' }}'
+    - condition: and
+      conditions: !input 'jumuah_on_conditions'
+    sequence: *id011
+  - conditions:
+    - condition: template
+      value_template: '{{ trigger.id == ''jumuah_off_time'' }}'
+    sequence: &id012
+    - condition: template
+      value_template: '{{ (now().weekday() == 4) }}'
+    - condition: template
+      value_template: '{{ not (pause_timer_entity not in [none,''''] and states(pause_timer_entity) ==
+        ''active'') }}'
+    - if:
+      - condition: template
+        value_template: '{{ ((jumuah_skip_next_off_entity not in [none,''''] and states(jumuah_skip_next_off_entity)
+          == ''on'') or ((skip_next_off_global_entity) not in [none,''''] and states(skip_next_off_global_entity)
+          == ''on'')) }}'
+      then:
+      - action: input_boolean.turn_off
+        target:
+          entity_id: !input 'jumuah_skip_next_off_entity'
+      - action: input_boolean.turn_off
+        target:
+          entity_id: !input 'skip_next_off_global_entity'
+      else:
+      - action: counter.decrement
+        target:
+          entity_id: !input 'counter_entity'
+      - condition: numeric_state
+        entity_id: !input 'counter_entity'
+        below: 1
+      - choose:
+        - conditions: []
+          sequence: !input 'off_action'
   - conditions:
     - condition: template
       value_template: '{{ trigger.id == ''jumuah_off_trigger'' }}'
     - condition: and
       conditions: !input 'jumuah_off_conditions'
-    sequence: *id002
+    sequence: *id012
+  - conditions:
+    - condition: template
+      value_template: '{{ trigger.id == ''taraweeh_on_time'' }}'
+    sequence: &id013
+    - condition: template
+      value_template: '{{ true }}'
+    - condition: template
+      value_template: '{{ not (pause_timer_entity not in [none,''''] and states(pause_timer_entity) ==
+        ''active'') }}'
+    - if:
+      - condition: template
+        value_template: '{{ ((taraweeh_skip_next_on_entity not in [none,''''] and states(taraweeh_skip_next_on_entity)
+          == ''on'') or ((skip_next_on_global_entity) not in [none,''''] and states(skip_next_on_global_entity)
+          == ''on'')) }}'
+      then:
+      - action: input_boolean.turn_off
+        target:
+          entity_id: !input 'taraweeh_skip_next_on_entity'
+      - action: input_boolean.turn_off
+        target:
+          entity_id: !input 'skip_next_on_global_entity'
+      else:
+      - action: counter.increment
+        target:
+          entity_id: !input 'counter_entity'
+      - choose:
+        - conditions: []
+          sequence: !input 'on_action'
+      - if:
+        - condition: template
+          value_template: '{{ circadian_enable }}'
+        then:
+        - action: light.turn_on
+          target: !input 'circadian_target'
+          data:
+            color_temp_kelvin: '{% set elev = state_attr(''sun.sun'', ''elevation'') | float(0) %}{% set
+              frac = ((elev - (-4)) / (60 - (-4))) %}{% set frac = [[frac, 0] | max, 1] | min %}{{ (circadian_min_cct
+              + frac * (circadian_max_cct - circadian_min_cct)) | round(0) | int }}'
+  - conditions:
+    - condition: template
+      value_template: '{{ trigger.id == ''taraweeh_on_trigger'' }}'
+    - condition: and
+      conditions: !input 'taraweeh_on_conditions'
+    sequence: *id013
+  - conditions:
+    - condition: template
+      value_template: '{{ trigger.id == ''taraweeh_off_time'' }}'
+    sequence: &id014
+    - condition: template
+      value_template: '{{ true }}'
+    - condition: template
+      value_template: '{{ not (pause_timer_entity not in [none,''''] and states(pause_timer_entity) ==
+        ''active'') }}'
+    - if:
+      - condition: template
+        value_template: '{{ ((taraweeh_skip_next_off_entity not in [none,''''] and states(taraweeh_skip_next_off_entity)
+          == ''on'') or ((skip_next_off_global_entity) not in [none,''''] and states(skip_next_off_global_entity)
+          == ''on'')) }}'
+      then:
+      - action: input_boolean.turn_off
+        target:
+          entity_id: !input 'taraweeh_skip_next_off_entity'
+      - action: input_boolean.turn_off
+        target:
+          entity_id: !input 'skip_next_off_global_entity'
+      else:
+      - action: counter.decrement
+        target:
+          entity_id: !input 'counter_entity'
+      - condition: numeric_state
+        entity_id: !input 'counter_entity'
+        below: 1
+      - choose:
+        - conditions: []
+          sequence: !input 'off_action'
   - conditions:
     - condition: template
       value_template: '{{ trigger.id == ''taraweeh_off_trigger'' }}'
     - condition: and
       conditions: !input 'taraweeh_off_conditions'
-    sequence: *id002
+    sequence: *id014
   - conditions:
     - condition: template
       value_template: '{{ trigger.id == ''circadian_tick'' }}'
     sequence:
+    - condition: template
+      value_template: '{{ not (pause_timer_entity not in [none,''''] and states(pause_timer_entity) ==
+        ''active'') }}'
     - condition: not
       conditions:
       - condition: numeric_state
