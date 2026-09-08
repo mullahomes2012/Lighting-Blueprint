@@ -833,6 +833,7 @@ blueprint:
           name: Global 'skip next ON' helper
           description: An input_boolean helper. When on, the very next ON across ANY slot is skipped once,
             then clears itself.
+          default: null
           selector:
             entity:
               filter:
@@ -841,12 +842,14 @@ blueprint:
           name: Global 'skip next OFF' helper
           description: An input_boolean helper. When on, the very next OFF across ANY slot is skipped
             once, then clears itself.
+          default: null
           selector:
             entity:
               filter:
               - domain: input_boolean
         pause_timer_entity:
           name: Pause timer helper
+          default: null
           description: A Timer helper. While it's running, this automation does nothing at all — no ON,
             no OFF, no circadian update, for any slot — whatever state things are in just holds. Resumes
             normally on its own once the timer finishes; no other helper needed. Start/cancel it directly
@@ -865,11 +868,13 @@ blueprint:
         circadian_target:
           name: Circadian light target
           description: The light(s) to keep circadian-adjusted. Applied independently of the ON/OFF actions
-            above.
+            above. Leave empty if you're not using circadian.
+          default: []
           selector:
-            target:
-              entity:
-                domain: light
+            entity:
+              multiple: true
+              filter:
+              - domain: light
         circadian_min_cct:
           name: Circadian minimum colour temperature (Kelvin)
           description: Used when the sun is at or below the horizon (warmest).
@@ -1138,10 +1143,12 @@ action:
       then:
       - action: input_boolean.turn_off
         target:
-          entity_id: !input 'fajr_skip_next_on_entity'
+          entity_id: '{{ [fajr_skip_next_on_entity] if fajr_skip_next_on_entity not in [none, ''''] else
+            [] }}'
       - action: input_boolean.turn_off
         target:
-          entity_id: !input 'skip_next_on_global_entity'
+          entity_id: '{{ [skip_next_on_global_entity] if skip_next_on_global_entity not in [none, '''']
+            else [] }}'
       else:
       - action: counter.increment
         target:
@@ -1154,7 +1161,8 @@ action:
           value_template: '{{ circadian_enable }}'
         then:
         - action: light.turn_on
-          target: !input 'circadian_target'
+          target:
+            entity_id: !input 'circadian_target'
           data:
             color_temp_kelvin: '{% set elev = state_attr(''sun.sun'', ''elevation'') | float(0) %}{% set
               frac = ((elev - (-4)) / (60 - (-4))) %}{% set frac = [[frac, 0] | max, 1] | min %}{{ (circadian_min_cct
@@ -1182,10 +1190,12 @@ action:
       then:
       - action: input_boolean.turn_off
         target:
-          entity_id: !input 'fajr_skip_next_off_entity'
+          entity_id: '{{ [fajr_skip_next_off_entity] if fajr_skip_next_off_entity not in [none, '''']
+            else [] }}'
       - action: input_boolean.turn_off
         target:
-          entity_id: !input 'skip_next_off_global_entity'
+          entity_id: '{{ [skip_next_off_global_entity] if skip_next_off_global_entity not in [none, '''']
+            else [] }}'
       else:
       - action: counter.decrement
         target:
@@ -1219,10 +1229,12 @@ action:
       then:
       - action: input_boolean.turn_off
         target:
-          entity_id: !input 'dhuhr_skip_next_on_entity'
+          entity_id: '{{ [dhuhr_skip_next_on_entity] if dhuhr_skip_next_on_entity not in [none, '''']
+            else [] }}'
       - action: input_boolean.turn_off
         target:
-          entity_id: !input 'skip_next_on_global_entity'
+          entity_id: '{{ [skip_next_on_global_entity] if skip_next_on_global_entity not in [none, '''']
+            else [] }}'
       else:
       - action: counter.increment
         target:
@@ -1235,7 +1247,8 @@ action:
           value_template: '{{ circadian_enable }}'
         then:
         - action: light.turn_on
-          target: !input 'circadian_target'
+          target:
+            entity_id: !input 'circadian_target'
           data:
             color_temp_kelvin: '{% set elev = state_attr(''sun.sun'', ''elevation'') | float(0) %}{% set
               frac = ((elev - (-4)) / (60 - (-4))) %}{% set frac = [[frac, 0] | max, 1] | min %}{{ (circadian_min_cct
@@ -1263,10 +1276,12 @@ action:
       then:
       - action: input_boolean.turn_off
         target:
-          entity_id: !input 'dhuhr_skip_next_off_entity'
+          entity_id: '{{ [dhuhr_skip_next_off_entity] if dhuhr_skip_next_off_entity not in [none, '''']
+            else [] }}'
       - action: input_boolean.turn_off
         target:
-          entity_id: !input 'skip_next_off_global_entity'
+          entity_id: '{{ [skip_next_off_global_entity] if skip_next_off_global_entity not in [none, '''']
+            else [] }}'
       else:
       - action: counter.decrement
         target:
@@ -1300,10 +1315,12 @@ action:
       then:
       - action: input_boolean.turn_off
         target:
-          entity_id: !input 'asr_skip_next_on_entity'
+          entity_id: '{{ [asr_skip_next_on_entity] if asr_skip_next_on_entity not in [none, ''''] else
+            [] }}'
       - action: input_boolean.turn_off
         target:
-          entity_id: !input 'skip_next_on_global_entity'
+          entity_id: '{{ [skip_next_on_global_entity] if skip_next_on_global_entity not in [none, '''']
+            else [] }}'
       else:
       - action: counter.increment
         target:
@@ -1316,7 +1333,8 @@ action:
           value_template: '{{ circadian_enable }}'
         then:
         - action: light.turn_on
-          target: !input 'circadian_target'
+          target:
+            entity_id: !input 'circadian_target'
           data:
             color_temp_kelvin: '{% set elev = state_attr(''sun.sun'', ''elevation'') | float(0) %}{% set
               frac = ((elev - (-4)) / (60 - (-4))) %}{% set frac = [[frac, 0] | max, 1] | min %}{{ (circadian_min_cct
@@ -1344,10 +1362,12 @@ action:
       then:
       - action: input_boolean.turn_off
         target:
-          entity_id: !input 'asr_skip_next_off_entity'
+          entity_id: '{{ [asr_skip_next_off_entity] if asr_skip_next_off_entity not in [none, ''''] else
+            [] }}'
       - action: input_boolean.turn_off
         target:
-          entity_id: !input 'skip_next_off_global_entity'
+          entity_id: '{{ [skip_next_off_global_entity] if skip_next_off_global_entity not in [none, '''']
+            else [] }}'
       else:
       - action: counter.decrement
         target:
@@ -1381,10 +1401,12 @@ action:
       then:
       - action: input_boolean.turn_off
         target:
-          entity_id: !input 'maghrib_skip_next_on_entity'
+          entity_id: '{{ [maghrib_skip_next_on_entity] if maghrib_skip_next_on_entity not in [none, '''']
+            else [] }}'
       - action: input_boolean.turn_off
         target:
-          entity_id: !input 'skip_next_on_global_entity'
+          entity_id: '{{ [skip_next_on_global_entity] if skip_next_on_global_entity not in [none, '''']
+            else [] }}'
       else:
       - action: counter.increment
         target:
@@ -1397,7 +1419,8 @@ action:
           value_template: '{{ circadian_enable }}'
         then:
         - action: light.turn_on
-          target: !input 'circadian_target'
+          target:
+            entity_id: !input 'circadian_target'
           data:
             color_temp_kelvin: '{% set elev = state_attr(''sun.sun'', ''elevation'') | float(0) %}{% set
               frac = ((elev - (-4)) / (60 - (-4))) %}{% set frac = [[frac, 0] | max, 1] | min %}{{ (circadian_min_cct
@@ -1425,10 +1448,12 @@ action:
       then:
       - action: input_boolean.turn_off
         target:
-          entity_id: !input 'maghrib_skip_next_off_entity'
+          entity_id: '{{ [maghrib_skip_next_off_entity] if maghrib_skip_next_off_entity not in [none,
+            ''''] else [] }}'
       - action: input_boolean.turn_off
         target:
-          entity_id: !input 'skip_next_off_global_entity'
+          entity_id: '{{ [skip_next_off_global_entity] if skip_next_off_global_entity not in [none, '''']
+            else [] }}'
       else:
       - action: counter.decrement
         target:
@@ -1462,10 +1487,12 @@ action:
       then:
       - action: input_boolean.turn_off
         target:
-          entity_id: !input 'isha_skip_next_on_entity'
+          entity_id: '{{ [isha_skip_next_on_entity] if isha_skip_next_on_entity not in [none, ''''] else
+            [] }}'
       - action: input_boolean.turn_off
         target:
-          entity_id: !input 'skip_next_on_global_entity'
+          entity_id: '{{ [skip_next_on_global_entity] if skip_next_on_global_entity not in [none, '''']
+            else [] }}'
       else:
       - action: counter.increment
         target:
@@ -1478,7 +1505,8 @@ action:
           value_template: '{{ circadian_enable }}'
         then:
         - action: light.turn_on
-          target: !input 'circadian_target'
+          target:
+            entity_id: !input 'circadian_target'
           data:
             color_temp_kelvin: '{% set elev = state_attr(''sun.sun'', ''elevation'') | float(0) %}{% set
               frac = ((elev - (-4)) / (60 - (-4))) %}{% set frac = [[frac, 0] | max, 1] | min %}{{ (circadian_min_cct
@@ -1506,10 +1534,12 @@ action:
       then:
       - action: input_boolean.turn_off
         target:
-          entity_id: !input 'isha_skip_next_off_entity'
+          entity_id: '{{ [isha_skip_next_off_entity] if isha_skip_next_off_entity not in [none, '''']
+            else [] }}'
       - action: input_boolean.turn_off
         target:
-          entity_id: !input 'skip_next_off_global_entity'
+          entity_id: '{{ [skip_next_off_global_entity] if skip_next_off_global_entity not in [none, '''']
+            else [] }}'
       else:
       - action: counter.decrement
         target:
@@ -1543,10 +1573,12 @@ action:
       then:
       - action: input_boolean.turn_off
         target:
-          entity_id: !input 'jumuah_skip_next_on_entity'
+          entity_id: '{{ [jumuah_skip_next_on_entity] if jumuah_skip_next_on_entity not in [none, '''']
+            else [] }}'
       - action: input_boolean.turn_off
         target:
-          entity_id: !input 'skip_next_on_global_entity'
+          entity_id: '{{ [skip_next_on_global_entity] if skip_next_on_global_entity not in [none, '''']
+            else [] }}'
       else:
       - action: counter.increment
         target:
@@ -1559,7 +1591,8 @@ action:
           value_template: '{{ circadian_enable }}'
         then:
         - action: light.turn_on
-          target: !input 'circadian_target'
+          target:
+            entity_id: !input 'circadian_target'
           data:
             color_temp_kelvin: '{% set elev = state_attr(''sun.sun'', ''elevation'') | float(0) %}{% set
               frac = ((elev - (-4)) / (60 - (-4))) %}{% set frac = [[frac, 0] | max, 1] | min %}{{ (circadian_min_cct
@@ -1587,10 +1620,12 @@ action:
       then:
       - action: input_boolean.turn_off
         target:
-          entity_id: !input 'jumuah_skip_next_off_entity'
+          entity_id: '{{ [jumuah_skip_next_off_entity] if jumuah_skip_next_off_entity not in [none, '''']
+            else [] }}'
       - action: input_boolean.turn_off
         target:
-          entity_id: !input 'skip_next_off_global_entity'
+          entity_id: '{{ [skip_next_off_global_entity] if skip_next_off_global_entity not in [none, '''']
+            else [] }}'
       else:
       - action: counter.decrement
         target:
@@ -1624,10 +1659,12 @@ action:
       then:
       - action: input_boolean.turn_off
         target:
-          entity_id: !input 'taraweeh_skip_next_on_entity'
+          entity_id: '{{ [taraweeh_skip_next_on_entity] if taraweeh_skip_next_on_entity not in [none,
+            ''''] else [] }}'
       - action: input_boolean.turn_off
         target:
-          entity_id: !input 'skip_next_on_global_entity'
+          entity_id: '{{ [skip_next_on_global_entity] if skip_next_on_global_entity not in [none, '''']
+            else [] }}'
       else:
       - action: counter.increment
         target:
@@ -1640,7 +1677,8 @@ action:
           value_template: '{{ circadian_enable }}'
         then:
         - action: light.turn_on
-          target: !input 'circadian_target'
+          target:
+            entity_id: !input 'circadian_target'
           data:
             color_temp_kelvin: '{% set elev = state_attr(''sun.sun'', ''elevation'') | float(0) %}{% set
               frac = ((elev - (-4)) / (60 - (-4))) %}{% set frac = [[frac, 0] | max, 1] | min %}{{ (circadian_min_cct
@@ -1668,10 +1706,12 @@ action:
       then:
       - action: input_boolean.turn_off
         target:
-          entity_id: !input 'taraweeh_skip_next_off_entity'
+          entity_id: '{{ [taraweeh_skip_next_off_entity] if taraweeh_skip_next_off_entity not in [none,
+            ''''] else [] }}'
       - action: input_boolean.turn_off
         target:
-          entity_id: !input 'skip_next_off_global_entity'
+          entity_id: '{{ [skip_next_off_global_entity] if skip_next_off_global_entity not in [none, '''']
+            else [] }}'
       else:
       - action: counter.decrement
         target:
@@ -1705,7 +1745,8 @@ action:
         value_template: '{{ circadian_enable }}'
       then:
       - action: light.turn_on
-        target: !input 'circadian_target'
+        target:
+          entity_id: !input 'circadian_target'
         data:
           color_temp_kelvin: '{% set elev = state_attr(''sun.sun'', ''elevation'') | float(0) %}{% set
             frac = ((elev - (-4)) / (60 - (-4))) %}{% set frac = [[frac, 0] | max, 1] | min %}{{ (circadian_min_cct
