@@ -868,8 +868,8 @@ blueprint:
         circadian_target:
           name: Circadian light target
           description: The light(s) to keep circadian-adjusted. Applied independently of the ON/OFF actions
-            above. Leave empty if you're not using circadian.
-          default: []
+            above. Required even if you're not using circadian yet -- pick any light; it's simply unused
+            while "Follow circadian rhythm" is off.
           selector:
             entity:
               multiple: true
@@ -1163,7 +1163,7 @@ action:
         then:
         - action: light.turn_on
           target:
-            entity_id: '{{ circadian_target if circadian_target not in [none, '''', []] else [] }}'
+            entity_id: !input 'circadian_target'
           data:
             color_temp_kelvin: '{% set elev = state_attr(''sun.sun'', ''elevation'') | float(0) %}{% set
               frac = ((elev - (-4)) / (60 - (-4))) %}{% set frac = [[frac, 0] | max, 1] | min %}{{ (circadian_min_cct
@@ -1249,7 +1249,7 @@ action:
         then:
         - action: light.turn_on
           target:
-            entity_id: '{{ circadian_target if circadian_target not in [none, '''', []] else [] }}'
+            entity_id: !input 'circadian_target'
           data:
             color_temp_kelvin: '{% set elev = state_attr(''sun.sun'', ''elevation'') | float(0) %}{% set
               frac = ((elev - (-4)) / (60 - (-4))) %}{% set frac = [[frac, 0] | max, 1] | min %}{{ (circadian_min_cct
@@ -1335,7 +1335,7 @@ action:
         then:
         - action: light.turn_on
           target:
-            entity_id: '{{ circadian_target if circadian_target not in [none, '''', []] else [] }}'
+            entity_id: !input 'circadian_target'
           data:
             color_temp_kelvin: '{% set elev = state_attr(''sun.sun'', ''elevation'') | float(0) %}{% set
               frac = ((elev - (-4)) / (60 - (-4))) %}{% set frac = [[frac, 0] | max, 1] | min %}{{ (circadian_min_cct
@@ -1421,7 +1421,7 @@ action:
         then:
         - action: light.turn_on
           target:
-            entity_id: '{{ circadian_target if circadian_target not in [none, '''', []] else [] }}'
+            entity_id: !input 'circadian_target'
           data:
             color_temp_kelvin: '{% set elev = state_attr(''sun.sun'', ''elevation'') | float(0) %}{% set
               frac = ((elev - (-4)) / (60 - (-4))) %}{% set frac = [[frac, 0] | max, 1] | min %}{{ (circadian_min_cct
@@ -1507,7 +1507,7 @@ action:
         then:
         - action: light.turn_on
           target:
-            entity_id: '{{ circadian_target if circadian_target not in [none, '''', []] else [] }}'
+            entity_id: !input 'circadian_target'
           data:
             color_temp_kelvin: '{% set elev = state_attr(''sun.sun'', ''elevation'') | float(0) %}{% set
               frac = ((elev - (-4)) / (60 - (-4))) %}{% set frac = [[frac, 0] | max, 1] | min %}{{ (circadian_min_cct
@@ -1593,7 +1593,7 @@ action:
         then:
         - action: light.turn_on
           target:
-            entity_id: '{{ circadian_target if circadian_target not in [none, '''', []] else [] }}'
+            entity_id: !input 'circadian_target'
           data:
             color_temp_kelvin: '{% set elev = state_attr(''sun.sun'', ''elevation'') | float(0) %}{% set
               frac = ((elev - (-4)) / (60 - (-4))) %}{% set frac = [[frac, 0] | max, 1] | min %}{{ (circadian_min_cct
@@ -1679,7 +1679,7 @@ action:
         then:
         - action: light.turn_on
           target:
-            entity_id: '{{ circadian_target if circadian_target not in [none, '''', []] else [] }}'
+            entity_id: !input 'circadian_target'
           data:
             color_temp_kelvin: '{% set elev = state_attr(''sun.sun'', ''elevation'') | float(0) %}{% set
               frac = ((elev - (-4)) / (60 - (-4))) %}{% set frac = [[frac, 0] | max, 1] | min %}{{ (circadian_min_cct
@@ -1747,7 +1747,7 @@ action:
       then:
       - action: light.turn_on
         target:
-          entity_id: '{{ circadian_target if circadian_target not in [none, '''', []] else [] }}'
+          entity_id: !input 'circadian_target'
         data:
           color_temp_kelvin: '{% set elev = state_attr(''sun.sun'', ''elevation'') | float(0) %}{% set
             frac = ((elev - (-4)) / (60 - (-4))) %}{% set frac = [[frac, 0] | max, 1] | min %}{{ (circadian_min_cct
