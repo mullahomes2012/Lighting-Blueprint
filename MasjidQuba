@@ -1,0 +1,1089 @@
+blueprint:
+  name: Awqaat MT - Prayer Lights (7 slots, overlap-safe, circadian)
+  description: A dedicated lights blueprint for the 5 daily Salaah plus Jumuah and Taraweeh. Each of the
+    7 slots independently chooses how it turns ON and OFF (minutes before/after a time sensor, and/or
+    a different trigger entity such as a door or amplifier, with optional conditions on the trigger-entity
+    option). All 7 slots share one ON action and one OFF action. A shared Counter helper keeps overlapping
+    slots overlap-safe. Optionally keeps a set of lights on a circadian colour-temperature curve based
+    on the sun's position while anything is on.
+  domain: automation
+  input:
+    prayers_section:
+      name: Prayer slots
+      icon: mdi:calendar-clock
+      input:
+        fajr_section:
+          name: Fajr
+          collapsed: true
+          input:
+            fajr_entity:
+              name: Fajr - time sensor
+              description: The Awqaat MT time sensor for Fajr (used by the "minutes before/after" option
+                below).
+              default: null
+              selector:
+                entity:
+                  filter:
+                  - domain: sensor
+                    device_class: timestamp
+            fajr_on_use_time:
+              name: Fajr ON - use minutes before
+              default: true
+              selector:
+                boolean: {}
+            fajr_on_before_minutes:
+              name: Fajr ON - minutes before
+              default: 15
+              selector:
+                number:
+                  min: 0
+                  max: 240
+                  unit_of_measurement: minutes
+                  mode: box
+            fajr_on_use_trigger:
+              name: Fajr ON - use a different trigger instead/as well
+              default: false
+              selector:
+                boolean: {}
+            fajr_on_trigger_entity:
+              name: Fajr ON - trigger entity
+              description: e.g. a door sensor or amplifier. Only used if the toggle above is on.
+              default: null
+              selector:
+                entity: {}
+            fajr_on_trigger_to_state:
+              name: Fajr ON - trigger entity's state to watch for
+              description: e.g. "on", "open", "playing". Only used if the toggle above is on.
+              default: ''
+              selector:
+                text: {}
+            fajr_on_conditions:
+              name: Fajr ON - conditions
+              description: Only checked for the trigger-entity option above, not the minutes-before option.
+              default: []
+              selector:
+                condition: {}
+            fajr_off_use_time:
+              name: Fajr OFF - use minutes after
+              default: true
+              selector:
+                boolean: {}
+            fajr_off_anchor_entity:
+              name: Fajr OFF - time sensor to measure "after" from
+              description: Doesn't have to be Fajr's own sensor — e.g. Fajr can turn off at Sunrise.
+              default: null
+              selector:
+                entity:
+                  filter:
+                  - domain: sensor
+                    device_class: timestamp
+            fajr_off_after_minutes:
+              name: Fajr OFF - minutes after
+              default: 30
+              selector:
+                number:
+                  min: 0
+                  max: 240
+                  unit_of_measurement: minutes
+                  mode: box
+            fajr_off_use_trigger:
+              name: Fajr OFF - use a different trigger instead/as well
+              default: false
+              selector:
+                boolean: {}
+            fajr_off_trigger_entity:
+              name: Fajr OFF - trigger entity
+              default: null
+              selector:
+                entity: {}
+            fajr_off_trigger_to_state:
+              name: Fajr OFF - trigger entity's state to watch for
+              default: ''
+              selector:
+                text: {}
+            fajr_off_conditions:
+              name: Fajr OFF - conditions
+              description: Only checked for the trigger-entity option above, not the minutes-after option.
+              default: []
+              selector:
+                condition: {}
+        dhuhr_section:
+          name: Dhuhr
+          collapsed: true
+          input:
+            dhuhr_entity:
+              name: Dhuhr - time sensor
+              description: The Awqaat MT time sensor for Dhuhr (used by the "minutes before/after" option
+                below).
+              default: null
+              selector:
+                entity:
+                  filter:
+                  - domain: sensor
+                    device_class: timestamp
+            dhuhr_on_use_time:
+              name: Dhuhr ON - use minutes before
+              default: true
+              selector:
+                boolean: {}
+            dhuhr_on_before_minutes:
+              name: Dhuhr ON - minutes before
+              default: 15
+              selector:
+                number:
+                  min: 0
+                  max: 240
+                  unit_of_measurement: minutes
+                  mode: box
+            dhuhr_on_use_trigger:
+              name: Dhuhr ON - use a different trigger instead/as well
+              default: false
+              selector:
+                boolean: {}
+            dhuhr_on_trigger_entity:
+              name: Dhuhr ON - trigger entity
+              description: e.g. a door sensor or amplifier. Only used if the toggle above is on.
+              default: null
+              selector:
+                entity: {}
+            dhuhr_on_trigger_to_state:
+              name: Dhuhr ON - trigger entity's state to watch for
+              description: e.g. "on", "open", "playing". Only used if the toggle above is on.
+              default: ''
+              selector:
+                text: {}
+            dhuhr_on_conditions:
+              name: Dhuhr ON - conditions
+              description: Only checked for the trigger-entity option above, not the minutes-before option.
+              default: []
+              selector:
+                condition: {}
+            dhuhr_off_use_time:
+              name: Dhuhr OFF - use minutes after
+              default: true
+              selector:
+                boolean: {}
+            dhuhr_off_anchor_entity:
+              name: Dhuhr OFF - time sensor to measure "after" from
+              description: Doesn't have to be Dhuhr's own sensor — e.g. Fajr can turn off at Sunrise.
+              default: null
+              selector:
+                entity:
+                  filter:
+                  - domain: sensor
+                    device_class: timestamp
+            dhuhr_off_after_minutes:
+              name: Dhuhr OFF - minutes after
+              default: 30
+              selector:
+                number:
+                  min: 0
+                  max: 240
+                  unit_of_measurement: minutes
+                  mode: box
+            dhuhr_off_use_trigger:
+              name: Dhuhr OFF - use a different trigger instead/as well
+              default: false
+              selector:
+                boolean: {}
+            dhuhr_off_trigger_entity:
+              name: Dhuhr OFF - trigger entity
+              default: null
+              selector:
+                entity: {}
+            dhuhr_off_trigger_to_state:
+              name: Dhuhr OFF - trigger entity's state to watch for
+              default: ''
+              selector:
+                text: {}
+            dhuhr_off_conditions:
+              name: Dhuhr OFF - conditions
+              description: Only checked for the trigger-entity option above, not the minutes-after option.
+              default: []
+              selector:
+                condition: {}
+        asr_section:
+          name: Asr
+          collapsed: true
+          input:
+            asr_entity:
+              name: Asr - time sensor
+              description: The Awqaat MT time sensor for Asr (used by the "minutes before/after" option
+                below).
+              default: null
+              selector:
+                entity:
+                  filter:
+                  - domain: sensor
+                    device_class: timestamp
+            asr_on_use_time:
+              name: Asr ON - use minutes before
+              default: true
+              selector:
+                boolean: {}
+            asr_on_before_minutes:
+              name: Asr ON - minutes before
+              default: 15
+              selector:
+                number:
+                  min: 0
+                  max: 240
+                  unit_of_measurement: minutes
+                  mode: box
+            asr_on_use_trigger:
+              name: Asr ON - use a different trigger instead/as well
+              default: false
+              selector:
+                boolean: {}
+            asr_on_trigger_entity:
+              name: Asr ON - trigger entity
+              description: e.g. a door sensor or amplifier. Only used if the toggle above is on.
+              default: null
+              selector:
+                entity: {}
+            asr_on_trigger_to_state:
+              name: Asr ON - trigger entity's state to watch for
+              description: e.g. "on", "open", "playing". Only used if the toggle above is on.
+              default: ''
+              selector:
+                text: {}
+            asr_on_conditions:
+              name: Asr ON - conditions
+              description: Only checked for the trigger-entity option above, not the minutes-before option.
+              default: []
+              selector:
+                condition: {}
+            asr_off_use_time:
+              name: Asr OFF - use minutes after
+              default: true
+              selector:
+                boolean: {}
+            asr_off_anchor_entity:
+              name: Asr OFF - time sensor to measure "after" from
+              description: Doesn't have to be Asr's own sensor — e.g. Fajr can turn off at Sunrise.
+              default: null
+              selector:
+                entity:
+                  filter:
+                  - domain: sensor
+                    device_class: timestamp
+            asr_off_after_minutes:
+              name: Asr OFF - minutes after
+              default: 30
+              selector:
+                number:
+                  min: 0
+                  max: 240
+                  unit_of_measurement: minutes
+                  mode: box
+            asr_off_use_trigger:
+              name: Asr OFF - use a different trigger instead/as well
+              default: false
+              selector:
+                boolean: {}
+            asr_off_trigger_entity:
+              name: Asr OFF - trigger entity
+              default: null
+              selector:
+                entity: {}
+            asr_off_trigger_to_state:
+              name: Asr OFF - trigger entity's state to watch for
+              default: ''
+              selector:
+                text: {}
+            asr_off_conditions:
+              name: Asr OFF - conditions
+              description: Only checked for the trigger-entity option above, not the minutes-after option.
+              default: []
+              selector:
+                condition: {}
+        maghrib_section:
+          name: Maghrib
+          collapsed: true
+          input:
+            maghrib_entity:
+              name: Maghrib - time sensor
+              description: The Awqaat MT time sensor for Maghrib (used by the "minutes before/after" option
+                below).
+              default: null
+              selector:
+                entity:
+                  filter:
+                  - domain: sensor
+                    device_class: timestamp
+            maghrib_on_use_time:
+              name: Maghrib ON - use minutes before
+              default: true
+              selector:
+                boolean: {}
+            maghrib_on_before_minutes:
+              name: Maghrib ON - minutes before
+              default: 15
+              selector:
+                number:
+                  min: 0
+                  max: 240
+                  unit_of_measurement: minutes
+                  mode: box
+            maghrib_on_use_trigger:
+              name: Maghrib ON - use a different trigger instead/as well
+              default: false
+              selector:
+                boolean: {}
+            maghrib_on_trigger_entity:
+              name: Maghrib ON - trigger entity
+              description: e.g. a door sensor or amplifier. Only used if the toggle above is on.
+              default: null
+              selector:
+                entity: {}
+            maghrib_on_trigger_to_state:
+              name: Maghrib ON - trigger entity's state to watch for
+              description: e.g. "on", "open", "playing". Only used if the toggle above is on.
+              default: ''
+              selector:
+                text: {}
+            maghrib_on_conditions:
+              name: Maghrib ON - conditions
+              description: Only checked for the trigger-entity option above, not the minutes-before option.
+              default: []
+              selector:
+                condition: {}
+            maghrib_off_use_time:
+              name: Maghrib OFF - use minutes after
+              default: true
+              selector:
+                boolean: {}
+            maghrib_off_anchor_entity:
+              name: Maghrib OFF - time sensor to measure "after" from
+              description: Doesn't have to be Maghrib's own sensor — e.g. Fajr can turn off at Sunrise.
+              default: null
+              selector:
+                entity:
+                  filter:
+                  - domain: sensor
+                    device_class: timestamp
+            maghrib_off_after_minutes:
+              name: Maghrib OFF - minutes after
+              default: 30
+              selector:
+                number:
+                  min: 0
+                  max: 240
+                  unit_of_measurement: minutes
+                  mode: box
+            maghrib_off_use_trigger:
+              name: Maghrib OFF - use a different trigger instead/as well
+              default: false
+              selector:
+                boolean: {}
+            maghrib_off_trigger_entity:
+              name: Maghrib OFF - trigger entity
+              default: null
+              selector:
+                entity: {}
+            maghrib_off_trigger_to_state:
+              name: Maghrib OFF - trigger entity's state to watch for
+              default: ''
+              selector:
+                text: {}
+            maghrib_off_conditions:
+              name: Maghrib OFF - conditions
+              description: Only checked for the trigger-entity option above, not the minutes-after option.
+              default: []
+              selector:
+                condition: {}
+        isha_section:
+          name: Isha
+          collapsed: true
+          input:
+            isha_entity:
+              name: Isha - time sensor
+              description: The Awqaat MT time sensor for Isha (used by the "minutes before/after" option
+                below).
+              default: null
+              selector:
+                entity:
+                  filter:
+                  - domain: sensor
+                    device_class: timestamp
+            isha_on_use_time:
+              name: Isha ON - use minutes before
+              default: true
+              selector:
+                boolean: {}
+            isha_on_before_minutes:
+              name: Isha ON - minutes before
+              default: 15
+              selector:
+                number:
+                  min: 0
+                  max: 240
+                  unit_of_measurement: minutes
+                  mode: box
+            isha_on_use_trigger:
+              name: Isha ON - use a different trigger instead/as well
+              default: false
+              selector:
+                boolean: {}
+            isha_on_trigger_entity:
+              name: Isha ON - trigger entity
+              description: e.g. a door sensor or amplifier. Only used if the toggle above is on.
+              default: null
+              selector:
+                entity: {}
+            isha_on_trigger_to_state:
+              name: Isha ON - trigger entity's state to watch for
+              description: e.g. "on", "open", "playing". Only used if the toggle above is on.
+              default: ''
+              selector:
+                text: {}
+            isha_on_conditions:
+              name: Isha ON - conditions
+              description: Only checked for the trigger-entity option above, not the minutes-before option.
+              default: []
+              selector:
+                condition: {}
+            isha_off_use_time:
+              name: Isha OFF - use minutes after
+              default: true
+              selector:
+                boolean: {}
+            isha_off_anchor_entity:
+              name: Isha OFF - time sensor to measure "after" from
+              description: Doesn't have to be Isha's own sensor — e.g. Fajr can turn off at Sunrise.
+              default: null
+              selector:
+                entity:
+                  filter:
+                  - domain: sensor
+                    device_class: timestamp
+            isha_off_after_minutes:
+              name: Isha OFF - minutes after
+              default: 30
+              selector:
+                number:
+                  min: 0
+                  max: 240
+                  unit_of_measurement: minutes
+                  mode: box
+            isha_off_use_trigger:
+              name: Isha OFF - use a different trigger instead/as well
+              default: false
+              selector:
+                boolean: {}
+            isha_off_trigger_entity:
+              name: Isha OFF - trigger entity
+              default: null
+              selector:
+                entity: {}
+            isha_off_trigger_to_state:
+              name: Isha OFF - trigger entity's state to watch for
+              default: ''
+              selector:
+                text: {}
+            isha_off_conditions:
+              name: Isha OFF - conditions
+              description: Only checked for the trigger-entity option above, not the minutes-after option.
+              default: []
+              selector:
+                condition: {}
+        jumuah_section:
+          name: Jumuah
+          collapsed: true
+          input:
+            jumuah_entity:
+              name: Jumuah - time sensor
+              description: The Awqaat MT time sensor for Jumuah (used by the "minutes before/after" option
+                below).
+              default: null
+              selector:
+                entity:
+                  filter:
+                  - domain: sensor
+                    device_class: timestamp
+            jumuah_on_use_time:
+              name: Jumuah ON - use minutes before
+              default: true
+              selector:
+                boolean: {}
+            jumuah_on_before_minutes:
+              name: Jumuah ON - minutes before
+              default: 15
+              selector:
+                number:
+                  min: 0
+                  max: 240
+                  unit_of_measurement: minutes
+                  mode: box
+            jumuah_on_use_trigger:
+              name: Jumuah ON - use a different trigger instead/as well
+              default: false
+              selector:
+                boolean: {}
+            jumuah_on_trigger_entity:
+              name: Jumuah ON - trigger entity
+              description: e.g. a door sensor or amplifier. Only used if the toggle above is on.
+              default: null
+              selector:
+                entity: {}
+            jumuah_on_trigger_to_state:
+              name: Jumuah ON - trigger entity's state to watch for
+              description: e.g. "on", "open", "playing". Only used if the toggle above is on.
+              default: ''
+              selector:
+                text: {}
+            jumuah_on_conditions:
+              name: Jumuah ON - conditions
+              description: Only checked for the trigger-entity option above, not the minutes-before option.
+              default: []
+              selector:
+                condition: {}
+            jumuah_off_use_time:
+              name: Jumuah OFF - use minutes after
+              default: true
+              selector:
+                boolean: {}
+            jumuah_off_anchor_entity:
+              name: Jumuah OFF - time sensor to measure "after" from
+              description: Doesn't have to be Jumuah's own sensor — e.g. Fajr can turn off at Sunrise.
+              default: null
+              selector:
+                entity:
+                  filter:
+                  - domain: sensor
+                    device_class: timestamp
+            jumuah_off_after_minutes:
+              name: Jumuah OFF - minutes after
+              default: 30
+              selector:
+                number:
+                  min: 0
+                  max: 240
+                  unit_of_measurement: minutes
+                  mode: box
+            jumuah_off_use_trigger:
+              name: Jumuah OFF - use a different trigger instead/as well
+              default: false
+              selector:
+                boolean: {}
+            jumuah_off_trigger_entity:
+              name: Jumuah OFF - trigger entity
+              default: null
+              selector:
+                entity: {}
+            jumuah_off_trigger_to_state:
+              name: Jumuah OFF - trigger entity's state to watch for
+              default: ''
+              selector:
+                text: {}
+            jumuah_off_conditions:
+              name: Jumuah OFF - conditions
+              description: Only checked for the trigger-entity option above, not the minutes-after option.
+              default: []
+              selector:
+                condition: {}
+        taraweeh_section:
+          name: Taraweeh
+          collapsed: true
+          input:
+            taraweeh_entity:
+              name: Taraweeh - time sensor
+              description: The Awqaat MT time sensor for Taraweeh (used by the "minutes before/after"
+                option below).
+              default: null
+              selector:
+                entity:
+                  filter:
+                  - domain: sensor
+                    device_class: timestamp
+            taraweeh_on_use_time:
+              name: Taraweeh ON - use minutes before
+              default: true
+              selector:
+                boolean: {}
+            taraweeh_on_before_minutes:
+              name: Taraweeh ON - minutes before
+              default: 15
+              selector:
+                number:
+                  min: 0
+                  max: 240
+                  unit_of_measurement: minutes
+                  mode: box
+            taraweeh_on_use_trigger:
+              name: Taraweeh ON - use a different trigger instead/as well
+              default: false
+              selector:
+                boolean: {}
+            taraweeh_on_trigger_entity:
+              name: Taraweeh ON - trigger entity
+              description: e.g. a door sensor or amplifier. Only used if the toggle above is on.
+              default: null
+              selector:
+                entity: {}
+            taraweeh_on_trigger_to_state:
+              name: Taraweeh ON - trigger entity's state to watch for
+              description: e.g. "on", "open", "playing". Only used if the toggle above is on.
+              default: ''
+              selector:
+                text: {}
+            taraweeh_on_conditions:
+              name: Taraweeh ON - conditions
+              description: Only checked for the trigger-entity option above, not the minutes-before option.
+              default: []
+              selector:
+                condition: {}
+            taraweeh_off_use_time:
+              name: Taraweeh OFF - use minutes after
+              default: true
+              selector:
+                boolean: {}
+            taraweeh_off_anchor_entity:
+              name: Taraweeh OFF - time sensor to measure "after" from
+              description: Doesn't have to be Taraweeh's own sensor — e.g. Fajr can turn off at Sunrise.
+              default: null
+              selector:
+                entity:
+                  filter:
+                  - domain: sensor
+                    device_class: timestamp
+            taraweeh_off_after_minutes:
+              name: Taraweeh OFF - minutes after
+              default: 30
+              selector:
+                number:
+                  min: 0
+                  max: 240
+                  unit_of_measurement: minutes
+                  mode: box
+            taraweeh_off_use_trigger:
+              name: Taraweeh OFF - use a different trigger instead/as well
+              default: false
+              selector:
+                boolean: {}
+            taraweeh_off_trigger_entity:
+              name: Taraweeh OFF - trigger entity
+              default: null
+              selector:
+                entity: {}
+            taraweeh_off_trigger_to_state:
+              name: Taraweeh OFF - trigger entity's state to watch for
+              default: ''
+              selector:
+                text: {}
+            taraweeh_off_conditions:
+              name: Taraweeh OFF - conditions
+              description: Only checked for the trigger-entity option above, not the minutes-after option.
+              default: []
+              selector:
+                condition: {}
+    shared_section:
+      name: Shared ON/OFF actions and overlap safety
+      icon: mdi:toggle-switch
+      input:
+        counter_entity:
+          name: Reference counter helper
+          description: A Counter helper (Settings > Devices & services > Helpers > Create helper > Counter).
+            Tracks how many of the 7 prayer slots currently want the light(s) on, so OFF only really happens
+            once nothing else still wants it on. Min 0, no max, step 1.
+          selector:
+            entity:
+              filter:
+              - domain: counter
+        on_action:
+          name: ON action (shared by all 7 slots)
+          description: Whatever should happen when any slot's ON fires — e.g. light.turn_on with brightness/transition.
+          default: []
+          selector:
+            action: {}
+        off_action:
+          name: OFF action (shared by all 7 slots)
+          description: Whatever should happen when a slot's OFF fires and nothing else still wants it
+            on.
+          default: []
+          selector:
+            action: {}
+        circadian_enable:
+          name: Follow circadian rhythm
+          description: If on, the target light(s) below get their colour temperature set from the sun's
+            position whenever something turns on, and re-applied periodically while anything is on.
+          default: false
+          selector:
+            boolean: {}
+        circadian_target:
+          name: Circadian light target
+          description: The light(s) to keep circadian-adjusted. Applied independently of the ON/OFF actions
+            above.
+          selector:
+            target:
+              entity:
+                domain: light
+        circadian_min_cct:
+          name: Circadian minimum colour temperature (Kelvin)
+          description: Used when the sun is at or below the horizon (warmest).
+          default: 2000
+          selector:
+            number:
+              min: 1500
+              max: 6500
+              unit_of_measurement: K
+              mode: box
+        circadian_max_cct:
+          name: Circadian maximum colour temperature (Kelvin)
+          description: Used at the sun's highest point of the day (coolest).
+          default: 5000
+          selector:
+            number:
+              min: 1500
+              max: 6500
+              unit_of_measurement: K
+              mode: box
+        circadian_recompute_interval:
+          name: Circadian recompute frequency
+          description: How often to re-apply the colour temperature while something is on.
+          default: /5
+          selector:
+            select:
+              options:
+              - value: /1
+                label: Every minute
+              - value: /5
+                label: Every 5 minutes
+              - value: /10
+                label: Every 10 minutes
+              - value: /15
+                label: Every 15 minutes
+              - value: /30
+                label: Every 30 minutes
+mode: queued
+max: 20
+trigger_variables:
+  fajr_entity: !input 'fajr_entity'
+  fajr_on_before_minutes: !input 'fajr_on_before_minutes'
+  fajr_off_anchor_entity: !input 'fajr_off_anchor_entity'
+  fajr_off_after_minutes: !input 'fajr_off_after_minutes'
+  dhuhr_entity: !input 'dhuhr_entity'
+  dhuhr_on_before_minutes: !input 'dhuhr_on_before_minutes'
+  dhuhr_off_anchor_entity: !input 'dhuhr_off_anchor_entity'
+  dhuhr_off_after_minutes: !input 'dhuhr_off_after_minutes'
+  asr_entity: !input 'asr_entity'
+  asr_on_before_minutes: !input 'asr_on_before_minutes'
+  asr_off_anchor_entity: !input 'asr_off_anchor_entity'
+  asr_off_after_minutes: !input 'asr_off_after_minutes'
+  maghrib_entity: !input 'maghrib_entity'
+  maghrib_on_before_minutes: !input 'maghrib_on_before_minutes'
+  maghrib_off_anchor_entity: !input 'maghrib_off_anchor_entity'
+  maghrib_off_after_minutes: !input 'maghrib_off_after_minutes'
+  isha_entity: !input 'isha_entity'
+  isha_on_before_minutes: !input 'isha_on_before_minutes'
+  isha_off_anchor_entity: !input 'isha_off_anchor_entity'
+  isha_off_after_minutes: !input 'isha_off_after_minutes'
+  jumuah_entity: !input 'jumuah_entity'
+  jumuah_on_before_minutes: !input 'jumuah_on_before_minutes'
+  jumuah_off_anchor_entity: !input 'jumuah_off_anchor_entity'
+  jumuah_off_after_minutes: !input 'jumuah_off_after_minutes'
+  taraweeh_entity: !input 'taraweeh_entity'
+  taraweeh_on_before_minutes: !input 'taraweeh_on_before_minutes'
+  taraweeh_off_anchor_entity: !input 'taraweeh_off_anchor_entity'
+  taraweeh_off_after_minutes: !input 'taraweeh_off_after_minutes'
+trigger:
+- platform: template
+  id: fajr_on_time
+  enabled: !input 'fajr_on_use_time'
+  value_template: '{{ fajr_entity not in [none, ''''] and states(fajr_entity) not in [''unknown'',''unavailable'',''none'','''']
+    and now() >= (as_datetime(states(fajr_entity)) - timedelta(minutes = fajr_on_before_minutes | int))
+    }}'
+- platform: state
+  id: fajr_on_trigger
+  enabled: !input 'fajr_on_use_trigger'
+  entity_id: !input 'fajr_on_trigger_entity'
+  to: !input 'fajr_on_trigger_to_state'
+- platform: template
+  id: fajr_off_time
+  enabled: !input 'fajr_off_use_time'
+  value_template: '{{ fajr_off_anchor_entity not in [none, ''''] and states(fajr_off_anchor_entity) not
+    in [''unknown'',''unavailable'',''none'',''''] and now() >= (as_datetime(states(fajr_off_anchor_entity))
+    + timedelta(minutes = fajr_off_after_minutes | int)) }}'
+- platform: state
+  id: fajr_off_trigger
+  enabled: !input 'fajr_off_use_trigger'
+  entity_id: !input 'fajr_off_trigger_entity'
+  to: !input 'fajr_off_trigger_to_state'
+- platform: template
+  id: dhuhr_on_time
+  enabled: !input 'dhuhr_on_use_time'
+  value_template: '{{ dhuhr_entity not in [none, ''''] and states(dhuhr_entity) not in [''unknown'',''unavailable'',''none'','''']
+    and now() >= (as_datetime(states(dhuhr_entity)) - timedelta(minutes = dhuhr_on_before_minutes | int))
+    }}'
+- platform: state
+  id: dhuhr_on_trigger
+  enabled: !input 'dhuhr_on_use_trigger'
+  entity_id: !input 'dhuhr_on_trigger_entity'
+  to: !input 'dhuhr_on_trigger_to_state'
+- platform: template
+  id: dhuhr_off_time
+  enabled: !input 'dhuhr_off_use_time'
+  value_template: '{{ dhuhr_off_anchor_entity not in [none, ''''] and states(dhuhr_off_anchor_entity)
+    not in [''unknown'',''unavailable'',''none'',''''] and now() >= (as_datetime(states(dhuhr_off_anchor_entity))
+    + timedelta(minutes = dhuhr_off_after_minutes | int)) }}'
+- platform: state
+  id: dhuhr_off_trigger
+  enabled: !input 'dhuhr_off_use_trigger'
+  entity_id: !input 'dhuhr_off_trigger_entity'
+  to: !input 'dhuhr_off_trigger_to_state'
+- platform: template
+  id: asr_on_time
+  enabled: !input 'asr_on_use_time'
+  value_template: '{{ asr_entity not in [none, ''''] and states(asr_entity) not in [''unknown'',''unavailable'',''none'','''']
+    and now() >= (as_datetime(states(asr_entity)) - timedelta(minutes = asr_on_before_minutes | int))
+    }}'
+- platform: state
+  id: asr_on_trigger
+  enabled: !input 'asr_on_use_trigger'
+  entity_id: !input 'asr_on_trigger_entity'
+  to: !input 'asr_on_trigger_to_state'
+- platform: template
+  id: asr_off_time
+  enabled: !input 'asr_off_use_time'
+  value_template: '{{ asr_off_anchor_entity not in [none, ''''] and states(asr_off_anchor_entity) not
+    in [''unknown'',''unavailable'',''none'',''''] and now() >= (as_datetime(states(asr_off_anchor_entity))
+    + timedelta(minutes = asr_off_after_minutes | int)) }}'
+- platform: state
+  id: asr_off_trigger
+  enabled: !input 'asr_off_use_trigger'
+  entity_id: !input 'asr_off_trigger_entity'
+  to: !input 'asr_off_trigger_to_state'
+- platform: template
+  id: maghrib_on_time
+  enabled: !input 'maghrib_on_use_time'
+  value_template: '{{ maghrib_entity not in [none, ''''] and states(maghrib_entity) not in [''unknown'',''unavailable'',''none'','''']
+    and now() >= (as_datetime(states(maghrib_entity)) - timedelta(minutes = maghrib_on_before_minutes
+    | int)) }}'
+- platform: state
+  id: maghrib_on_trigger
+  enabled: !input 'maghrib_on_use_trigger'
+  entity_id: !input 'maghrib_on_trigger_entity'
+  to: !input 'maghrib_on_trigger_to_state'
+- platform: template
+  id: maghrib_off_time
+  enabled: !input 'maghrib_off_use_time'
+  value_template: '{{ maghrib_off_anchor_entity not in [none, ''''] and states(maghrib_off_anchor_entity)
+    not in [''unknown'',''unavailable'',''none'',''''] and now() >= (as_datetime(states(maghrib_off_anchor_entity))
+    + timedelta(minutes = maghrib_off_after_minutes | int)) }}'
+- platform: state
+  id: maghrib_off_trigger
+  enabled: !input 'maghrib_off_use_trigger'
+  entity_id: !input 'maghrib_off_trigger_entity'
+  to: !input 'maghrib_off_trigger_to_state'
+- platform: template
+  id: isha_on_time
+  enabled: !input 'isha_on_use_time'
+  value_template: '{{ isha_entity not in [none, ''''] and states(isha_entity) not in [''unknown'',''unavailable'',''none'','''']
+    and now() >= (as_datetime(states(isha_entity)) - timedelta(minutes = isha_on_before_minutes | int))
+    }}'
+- platform: state
+  id: isha_on_trigger
+  enabled: !input 'isha_on_use_trigger'
+  entity_id: !input 'isha_on_trigger_entity'
+  to: !input 'isha_on_trigger_to_state'
+- platform: template
+  id: isha_off_time
+  enabled: !input 'isha_off_use_time'
+  value_template: '{{ isha_off_anchor_entity not in [none, ''''] and states(isha_off_anchor_entity) not
+    in [''unknown'',''unavailable'',''none'',''''] and now() >= (as_datetime(states(isha_off_anchor_entity))
+    + timedelta(minutes = isha_off_after_minutes | int)) }}'
+- platform: state
+  id: isha_off_trigger
+  enabled: !input 'isha_off_use_trigger'
+  entity_id: !input 'isha_off_trigger_entity'
+  to: !input 'isha_off_trigger_to_state'
+- platform: template
+  id: jumuah_on_time
+  enabled: !input 'jumuah_on_use_time'
+  value_template: '{{ jumuah_entity not in [none, ''''] and states(jumuah_entity) not in [''unknown'',''unavailable'',''none'','''']
+    and now() >= (as_datetime(states(jumuah_entity)) - timedelta(minutes = jumuah_on_before_minutes |
+    int)) }}'
+- platform: state
+  id: jumuah_on_trigger
+  enabled: !input 'jumuah_on_use_trigger'
+  entity_id: !input 'jumuah_on_trigger_entity'
+  to: !input 'jumuah_on_trigger_to_state'
+- platform: template
+  id: jumuah_off_time
+  enabled: !input 'jumuah_off_use_time'
+  value_template: '{{ jumuah_off_anchor_entity not in [none, ''''] and states(jumuah_off_anchor_entity)
+    not in [''unknown'',''unavailable'',''none'',''''] and now() >= (as_datetime(states(jumuah_off_anchor_entity))
+    + timedelta(minutes = jumuah_off_after_minutes | int)) }}'
+- platform: state
+  id: jumuah_off_trigger
+  enabled: !input 'jumuah_off_use_trigger'
+  entity_id: !input 'jumuah_off_trigger_entity'
+  to: !input 'jumuah_off_trigger_to_state'
+- platform: template
+  id: taraweeh_on_time
+  enabled: !input 'taraweeh_on_use_time'
+  value_template: '{{ taraweeh_entity not in [none, ''''] and states(taraweeh_entity) not in [''unknown'',''unavailable'',''none'','''']
+    and now() >= (as_datetime(states(taraweeh_entity)) - timedelta(minutes = taraweeh_on_before_minutes
+    | int)) }}'
+- platform: state
+  id: taraweeh_on_trigger
+  enabled: !input 'taraweeh_on_use_trigger'
+  entity_id: !input 'taraweeh_on_trigger_entity'
+  to: !input 'taraweeh_on_trigger_to_state'
+- platform: template
+  id: taraweeh_off_time
+  enabled: !input 'taraweeh_off_use_time'
+  value_template: '{{ taraweeh_off_anchor_entity not in [none, ''''] and states(taraweeh_off_anchor_entity)
+    not in [''unknown'',''unavailable'',''none'',''''] and now() >= (as_datetime(states(taraweeh_off_anchor_entity))
+    + timedelta(minutes = taraweeh_off_after_minutes | int)) }}'
+- platform: state
+  id: taraweeh_off_trigger
+  enabled: !input 'taraweeh_off_use_trigger'
+  entity_id: !input 'taraweeh_off_trigger_entity'
+  to: !input 'taraweeh_off_trigger_to_state'
+- platform: time_pattern
+  id: circadian_tick
+  enabled: !input 'circadian_enable'
+  minutes: !input 'circadian_recompute_interval'
+variables:
+  circadian_enable: !input 'circadian_enable'
+  circadian_min_cct: !input 'circadian_min_cct'
+  circadian_max_cct: !input 'circadian_max_cct'
+action:
+- choose:
+  - conditions:
+    - condition: template
+      value_template: '{{ trigger.id.endswith(''_on_time'') }}'
+    sequence: &id001
+    - action: counter.increment
+      target:
+        entity_id: !input 'counter_entity'
+    - choose:
+      - conditions: []
+        sequence: !input 'on_action'
+    - if:
+      - condition: template
+        value_template: '{{ circadian_enable }}'
+      then:
+      - action: light.turn_on
+        target: !input 'circadian_target'
+        data:
+          color_temp_kelvin: '{% set elev = state_attr(''sun.sun'', ''elevation'') | float(0) %}{% set
+            frac = ((elev - (-4)) / (60 - (-4))) %}{% set frac = [[frac, 0] | max, 1] | min %}{{ (circadian_min_cct
+            + frac * (circadian_max_cct - circadian_min_cct)) | round(0) | int }}'
+  - conditions:
+    - condition: template
+      value_template: '{{ trigger.id == ''fajr_on_trigger'' }}'
+    - condition: and
+      conditions: !input 'fajr_on_conditions'
+    sequence: *id001
+  - conditions:
+    - condition: template
+      value_template: '{{ trigger.id == ''dhuhr_on_trigger'' }}'
+    - condition: and
+      conditions: !input 'dhuhr_on_conditions'
+    sequence: *id001
+  - conditions:
+    - condition: template
+      value_template: '{{ trigger.id == ''asr_on_trigger'' }}'
+    - condition: and
+      conditions: !input 'asr_on_conditions'
+    sequence: *id001
+  - conditions:
+    - condition: template
+      value_template: '{{ trigger.id == ''maghrib_on_trigger'' }}'
+    - condition: and
+      conditions: !input 'maghrib_on_conditions'
+    sequence: *id001
+  - conditions:
+    - condition: template
+      value_template: '{{ trigger.id == ''isha_on_trigger'' }}'
+    - condition: and
+      conditions: !input 'isha_on_conditions'
+    sequence: *id001
+  - conditions:
+    - condition: template
+      value_template: '{{ trigger.id == ''jumuah_on_trigger'' }}'
+    - condition: and
+      conditions: !input 'jumuah_on_conditions'
+    sequence: *id001
+  - conditions:
+    - condition: template
+      value_template: '{{ trigger.id == ''taraweeh_on_trigger'' }}'
+    - condition: and
+      conditions: !input 'taraweeh_on_conditions'
+    sequence: *id001
+  - conditions:
+    - condition: template
+      value_template: '{{ trigger.id.endswith(''_off_time'') }}'
+    sequence: &id002
+    - action: counter.decrement
+      target:
+        entity_id: !input 'counter_entity'
+    - condition: numeric_state
+      entity_id: !input 'counter_entity'
+      below: 1
+    - choose:
+      - conditions: []
+        sequence: !input 'off_action'
+  - conditions:
+    - condition: template
+      value_template: '{{ trigger.id == ''fajr_off_trigger'' }}'
+    - condition: and
+      conditions: !input 'fajr_off_conditions'
+    sequence: *id002
+  - conditions:
+    - condition: template
+      value_template: '{{ trigger.id == ''dhuhr_off_trigger'' }}'
+    - condition: and
+      conditions: !input 'dhuhr_off_conditions'
+    sequence: *id002
+  - conditions:
+    - condition: template
+      value_template: '{{ trigger.id == ''asr_off_trigger'' }}'
+    - condition: and
+      conditions: !input 'asr_off_conditions'
+    sequence: *id002
+  - conditions:
+    - condition: template
+      value_template: '{{ trigger.id == ''maghrib_off_trigger'' }}'
+    - condition: and
+      conditions: !input 'maghrib_off_conditions'
+    sequence: *id002
+  - conditions:
+    - condition: template
+      value_template: '{{ trigger.id == ''isha_off_trigger'' }}'
+    - condition: and
+      conditions: !input 'isha_off_conditions'
+    sequence: *id002
+  - conditions:
+    - condition: template
+      value_template: '{{ trigger.id == ''jumuah_off_trigger'' }}'
+    - condition: and
+      conditions: !input 'jumuah_off_conditions'
+    sequence: *id002
+  - conditions:
+    - condition: template
+      value_template: '{{ trigger.id == ''taraweeh_off_trigger'' }}'
+    - condition: and
+      conditions: !input 'taraweeh_off_conditions'
+    sequence: *id002
+  - conditions:
+    - condition: template
+      value_template: '{{ trigger.id == ''circadian_tick'' }}'
+    sequence:
+    - condition: not
+      conditions:
+      - condition: numeric_state
+        entity_id: !input 'counter_entity'
+        below: 1
+    - if:
+      - condition: template
+        value_template: '{{ circadian_enable }}'
+      then:
+      - action: light.turn_on
+        target: !input 'circadian_target'
+        data:
+          color_temp_kelvin: '{% set elev = state_attr(''sun.sun'', ''elevation'') | float(0) %}{% set
+            frac = ((elev - (-4)) / (60 - (-4))) %}{% set frac = [[frac, 0] | max, 1] | min %}{{ (circadian_min_cct
+            + frac * (circadian_max_cct - circadian_min_cct)) | round(0) | int }}'
