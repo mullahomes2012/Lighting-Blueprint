@@ -1143,13 +1143,13 @@ action:
           == ''on'')) }}'
       then:
       - action: input_boolean.turn_off
-        target:
-          entity_id: '{{ [fajr_skip_next_on_entity] if fajr_skip_next_on_entity not in [none, ''''] else
-            [] }}'
+        data:
+          entity_id: '{{ fajr_skip_next_on_entity if fajr_skip_next_on_entity not in [none, ''''] else
+            '''' }}'
       - action: input_boolean.turn_off
-        target:
-          entity_id: '{{ [skip_next_on_global_entity] if skip_next_on_global_entity not in [none, '''']
-            else [] }}'
+        data:
+          entity_id: '{{ skip_next_on_global_entity if skip_next_on_global_entity not in [none, '''']
+            else '''' }}'
       else:
       - action: counter.increment
         target:
@@ -1190,13 +1190,13 @@ action:
           == ''on'')) }}'
       then:
       - action: input_boolean.turn_off
-        target:
-          entity_id: '{{ [fajr_skip_next_off_entity] if fajr_skip_next_off_entity not in [none, '''']
-            else [] }}'
+        data:
+          entity_id: '{{ fajr_skip_next_off_entity if fajr_skip_next_off_entity not in [none, ''''] else
+            '''' }}'
       - action: input_boolean.turn_off
-        target:
-          entity_id: '{{ [skip_next_off_global_entity] if skip_next_off_global_entity not in [none, '''']
-            else [] }}'
+        data:
+          entity_id: '{{ skip_next_off_global_entity if skip_next_off_global_entity not in [none, '''']
+            else '''' }}'
       else:
       - action: counter.decrement
         target:
@@ -1229,13 +1229,13 @@ action:
           == ''on'')) }}'
       then:
       - action: input_boolean.turn_off
-        target:
-          entity_id: '{{ [dhuhr_skip_next_on_entity] if dhuhr_skip_next_on_entity not in [none, '''']
-            else [] }}'
+        data:
+          entity_id: '{{ dhuhr_skip_next_on_entity if dhuhr_skip_next_on_entity not in [none, ''''] else
+            '''' }}'
       - action: input_boolean.turn_off
-        target:
-          entity_id: '{{ [skip_next_on_global_entity] if skip_next_on_global_entity not in [none, '''']
-            else [] }}'
+        data:
+          entity_id: '{{ skip_next_on_global_entity if skip_next_on_global_entity not in [none, '''']
+            else '''' }}'
       else:
       - action: counter.increment
         target:
@@ -1276,13 +1276,13 @@ action:
           == ''on'')) }}'
       then:
       - action: input_boolean.turn_off
-        target:
-          entity_id: '{{ [dhuhr_skip_next_off_entity] if dhuhr_skip_next_off_entity not in [none, '''']
-            else [] }}'
+        data:
+          entity_id: '{{ dhuhr_skip_next_off_entity if dhuhr_skip_next_off_entity not in [none, '''']
+            else '''' }}'
       - action: input_boolean.turn_off
-        target:
-          entity_id: '{{ [skip_next_off_global_entity] if skip_next_off_global_entity not in [none, '''']
-            else [] }}'
+        data:
+          entity_id: '{{ skip_next_off_global_entity if skip_next_off_global_entity not in [none, '''']
+            else '''' }}'
       else:
       - action: counter.decrement
         target:
@@ -1315,13 +1315,13 @@ action:
           == ''on'')) }}'
       then:
       - action: input_boolean.turn_off
-        target:
-          entity_id: '{{ [asr_skip_next_on_entity] if asr_skip_next_on_entity not in [none, ''''] else
-            [] }}'
+        data:
+          entity_id: '{{ asr_skip_next_on_entity if asr_skip_next_on_entity not in [none, ''''] else ''''
+            }}'
       - action: input_boolean.turn_off
-        target:
-          entity_id: '{{ [skip_next_on_global_entity] if skip_next_on_global_entity not in [none, '''']
-            else [] }}'
+        data:
+          entity_id: '{{ skip_next_on_global_entity if skip_next_on_global_entity not in [none, '''']
+            else '''' }}'
       else:
       - action: counter.increment
         target:
@@ -1362,13 +1362,13 @@ action:
           == ''on'')) }}'
       then:
       - action: input_boolean.turn_off
-        target:
-          entity_id: '{{ [asr_skip_next_off_entity] if asr_skip_next_off_entity not in [none, ''''] else
-            [] }}'
+        data:
+          entity_id: '{{ asr_skip_next_off_entity if asr_skip_next_off_entity not in [none, ''''] else
+            '''' }}'
       - action: input_boolean.turn_off
-        target:
-          entity_id: '{{ [skip_next_off_global_entity] if skip_next_off_global_entity not in [none, '''']
-            else [] }}'
+        data:
+          entity_id: '{{ skip_next_off_global_entity if skip_next_off_global_entity not in [none, '''']
+            else '''' }}'
       else:
       - action: counter.decrement
         target:
@@ -1401,13 +1401,13 @@ action:
           == ''on'')) }}'
       then:
       - action: input_boolean.turn_off
-        target:
-          entity_id: '{{ [maghrib_skip_next_on_entity] if maghrib_skip_next_on_entity not in [none, '''']
-            else [] }}'
+        data:
+          entity_id: '{{ maghrib_skip_next_on_entity if maghrib_skip_next_on_entity not in [none, '''']
+            else '''' }}'
       - action: input_boolean.turn_off
-        target:
-          entity_id: '{{ [skip_next_on_global_entity] if skip_next_on_global_entity not in [none, '''']
-            else [] }}'
+        data:
+          entity_id: '{{ skip_next_on_global_entity if skip_next_on_global_entity not in [none, '''']
+            else '''' }}'
       else:
       - action: counter.increment
         target:
@@ -1448,13 +1448,13 @@ action:
           == ''on'')) }}'
       then:
       - action: input_boolean.turn_off
-        target:
-          entity_id: '{{ [maghrib_skip_next_off_entity] if maghrib_skip_next_off_entity not in [none,
-            ''''] else [] }}'
+        data:
+          entity_id: '{{ maghrib_skip_next_off_entity if maghrib_skip_next_off_entity not in [none, '''']
+            else '''' }}'
       - action: input_boolean.turn_off
-        target:
-          entity_id: '{{ [skip_next_off_global_entity] if skip_next_off_global_entity not in [none, '''']
-            else [] }}'
+        data:
+          entity_id: '{{ skip_next_off_global_entity if skip_next_off_global_entity not in [none, '''']
+            else '''' }}'
       else:
       - action: counter.decrement
         target:
@@ -1487,13 +1487,13 @@ action:
           == ''on'')) }}'
       then:
       - action: input_boolean.turn_off
-        target:
-          entity_id: '{{ [isha_skip_next_on_entity] if isha_skip_next_on_entity not in [none, ''''] else
-            [] }}'
+        data:
+          entity_id: '{{ isha_skip_next_on_entity if isha_skip_next_on_entity not in [none, ''''] else
+            '''' }}'
       - action: input_boolean.turn_off
-        target:
-          entity_id: '{{ [skip_next_on_global_entity] if skip_next_on_global_entity not in [none, '''']
-            else [] }}'
+        data:
+          entity_id: '{{ skip_next_on_global_entity if skip_next_on_global_entity not in [none, '''']
+            else '''' }}'
       else:
       - action: counter.increment
         target:
@@ -1534,13 +1534,13 @@ action:
           == ''on'')) }}'
       then:
       - action: input_boolean.turn_off
-        target:
-          entity_id: '{{ [isha_skip_next_off_entity] if isha_skip_next_off_entity not in [none, '''']
-            else [] }}'
+        data:
+          entity_id: '{{ isha_skip_next_off_entity if isha_skip_next_off_entity not in [none, ''''] else
+            '''' }}'
       - action: input_boolean.turn_off
-        target:
-          entity_id: '{{ [skip_next_off_global_entity] if skip_next_off_global_entity not in [none, '''']
-            else [] }}'
+        data:
+          entity_id: '{{ skip_next_off_global_entity if skip_next_off_global_entity not in [none, '''']
+            else '''' }}'
       else:
       - action: counter.decrement
         target:
@@ -1573,13 +1573,13 @@ action:
           == ''on'')) }}'
       then:
       - action: input_boolean.turn_off
-        target:
-          entity_id: '{{ [jumuah_skip_next_on_entity] if jumuah_skip_next_on_entity not in [none, '''']
-            else [] }}'
+        data:
+          entity_id: '{{ jumuah_skip_next_on_entity if jumuah_skip_next_on_entity not in [none, '''']
+            else '''' }}'
       - action: input_boolean.turn_off
-        target:
-          entity_id: '{{ [skip_next_on_global_entity] if skip_next_on_global_entity not in [none, '''']
-            else [] }}'
+        data:
+          entity_id: '{{ skip_next_on_global_entity if skip_next_on_global_entity not in [none, '''']
+            else '''' }}'
       else:
       - action: counter.increment
         target:
@@ -1620,13 +1620,13 @@ action:
           == ''on'')) }}'
       then:
       - action: input_boolean.turn_off
-        target:
-          entity_id: '{{ [jumuah_skip_next_off_entity] if jumuah_skip_next_off_entity not in [none, '''']
-            else [] }}'
+        data:
+          entity_id: '{{ jumuah_skip_next_off_entity if jumuah_skip_next_off_entity not in [none, '''']
+            else '''' }}'
       - action: input_boolean.turn_off
-        target:
-          entity_id: '{{ [skip_next_off_global_entity] if skip_next_off_global_entity not in [none, '''']
-            else [] }}'
+        data:
+          entity_id: '{{ skip_next_off_global_entity if skip_next_off_global_entity not in [none, '''']
+            else '''' }}'
       else:
       - action: counter.decrement
         target:
@@ -1659,13 +1659,13 @@ action:
           == ''on'')) }}'
       then:
       - action: input_boolean.turn_off
-        target:
-          entity_id: '{{ [taraweeh_skip_next_on_entity] if taraweeh_skip_next_on_entity not in [none,
-            ''''] else [] }}'
+        data:
+          entity_id: '{{ taraweeh_skip_next_on_entity if taraweeh_skip_next_on_entity not in [none, '''']
+            else '''' }}'
       - action: input_boolean.turn_off
-        target:
-          entity_id: '{{ [skip_next_on_global_entity] if skip_next_on_global_entity not in [none, '''']
-            else [] }}'
+        data:
+          entity_id: '{{ skip_next_on_global_entity if skip_next_on_global_entity not in [none, '''']
+            else '''' }}'
       else:
       - action: counter.increment
         target:
@@ -1706,13 +1706,13 @@ action:
           == ''on'')) }}'
       then:
       - action: input_boolean.turn_off
-        target:
-          entity_id: '{{ [taraweeh_skip_next_off_entity] if taraweeh_skip_next_off_entity not in [none,
-            ''''] else [] }}'
+        data:
+          entity_id: '{{ taraweeh_skip_next_off_entity if taraweeh_skip_next_off_entity not in [none,
+            ''''] else '''' }}'
       - action: input_boolean.turn_off
-        target:
-          entity_id: '{{ [skip_next_off_global_entity] if skip_next_off_global_entity not in [none, '''']
-            else [] }}'
+        data:
+          entity_id: '{{ skip_next_off_global_entity if skip_next_off_global_entity not in [none, '''']
+            else '''' }}'
       else:
       - action: counter.decrement
         target:
