@@ -1104,6 +1104,7 @@ trigger:
   minutes: !input 'circadian_recompute_interval'
 variables:
   circadian_enable: !input 'circadian_enable'
+  circadian_target: !input 'circadian_target'
   circadian_min_cct: !input 'circadian_min_cct'
   circadian_max_cct: !input 'circadian_max_cct'
   pause_timer_entity: !input 'pause_timer_entity'
@@ -1162,7 +1163,7 @@ action:
         then:
         - action: light.turn_on
           target:
-            entity_id: !input 'circadian_target'
+            entity_id: '{{ circadian_target if circadian_target not in [none, '''', []] else [] }}'
           data:
             color_temp_kelvin: '{% set elev = state_attr(''sun.sun'', ''elevation'') | float(0) %}{% set
               frac = ((elev - (-4)) / (60 - (-4))) %}{% set frac = [[frac, 0] | max, 1] | min %}{{ (circadian_min_cct
@@ -1248,7 +1249,7 @@ action:
         then:
         - action: light.turn_on
           target:
-            entity_id: !input 'circadian_target'
+            entity_id: '{{ circadian_target if circadian_target not in [none, '''', []] else [] }}'
           data:
             color_temp_kelvin: '{% set elev = state_attr(''sun.sun'', ''elevation'') | float(0) %}{% set
               frac = ((elev - (-4)) / (60 - (-4))) %}{% set frac = [[frac, 0] | max, 1] | min %}{{ (circadian_min_cct
@@ -1334,7 +1335,7 @@ action:
         then:
         - action: light.turn_on
           target:
-            entity_id: !input 'circadian_target'
+            entity_id: '{{ circadian_target if circadian_target not in [none, '''', []] else [] }}'
           data:
             color_temp_kelvin: '{% set elev = state_attr(''sun.sun'', ''elevation'') | float(0) %}{% set
               frac = ((elev - (-4)) / (60 - (-4))) %}{% set frac = [[frac, 0] | max, 1] | min %}{{ (circadian_min_cct
@@ -1420,7 +1421,7 @@ action:
         then:
         - action: light.turn_on
           target:
-            entity_id: !input 'circadian_target'
+            entity_id: '{{ circadian_target if circadian_target not in [none, '''', []] else [] }}'
           data:
             color_temp_kelvin: '{% set elev = state_attr(''sun.sun'', ''elevation'') | float(0) %}{% set
               frac = ((elev - (-4)) / (60 - (-4))) %}{% set frac = [[frac, 0] | max, 1] | min %}{{ (circadian_min_cct
@@ -1506,7 +1507,7 @@ action:
         then:
         - action: light.turn_on
           target:
-            entity_id: !input 'circadian_target'
+            entity_id: '{{ circadian_target if circadian_target not in [none, '''', []] else [] }}'
           data:
             color_temp_kelvin: '{% set elev = state_attr(''sun.sun'', ''elevation'') | float(0) %}{% set
               frac = ((elev - (-4)) / (60 - (-4))) %}{% set frac = [[frac, 0] | max, 1] | min %}{{ (circadian_min_cct
@@ -1592,7 +1593,7 @@ action:
         then:
         - action: light.turn_on
           target:
-            entity_id: !input 'circadian_target'
+            entity_id: '{{ circadian_target if circadian_target not in [none, '''', []] else [] }}'
           data:
             color_temp_kelvin: '{% set elev = state_attr(''sun.sun'', ''elevation'') | float(0) %}{% set
               frac = ((elev - (-4)) / (60 - (-4))) %}{% set frac = [[frac, 0] | max, 1] | min %}{{ (circadian_min_cct
@@ -1678,7 +1679,7 @@ action:
         then:
         - action: light.turn_on
           target:
-            entity_id: !input 'circadian_target'
+            entity_id: '{{ circadian_target if circadian_target not in [none, '''', []] else [] }}'
           data:
             color_temp_kelvin: '{% set elev = state_attr(''sun.sun'', ''elevation'') | float(0) %}{% set
               frac = ((elev - (-4)) / (60 - (-4))) %}{% set frac = [[frac, 0] | max, 1] | min %}{{ (circadian_min_cct
@@ -1746,7 +1747,7 @@ action:
       then:
       - action: light.turn_on
         target:
-          entity_id: !input 'circadian_target'
+          entity_id: '{{ circadian_target if circadian_target not in [none, '''', []] else [] }}'
         data:
           color_temp_kelvin: '{% set elev = state_attr(''sun.sun'', ''elevation'') | float(0) %}{% set
             frac = ((elev - (-4)) / (60 - (-4))) %}{% set frac = [[frac, 0] | max, 1] | min %}{{ (circadian_min_cct
