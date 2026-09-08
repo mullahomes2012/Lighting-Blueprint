@@ -61,9 +61,9 @@ blueprint:
             condition: {}
         fajr_skip_next_on_entity:
           name: Fajr - 'skip next ON' helper
-          description: An input_boolean helper. When it's on, the very next ON for this slot is skipped
-            once, then this clears itself automatically.
-          default: null
+          description: An input_boolean helper (required). When it's on, the very next ON for this slot
+            is skipped once, then this clears itself automatically. If you don't want per-slot skip control,
+            just point every slot's skip fields at the same couple of shared input_booleans.
           selector:
             entity:
               filter:
@@ -114,9 +114,9 @@ blueprint:
             condition: {}
         fajr_skip_next_off_entity:
           name: Fajr - 'skip next OFF' helper
-          description: An input_boolean helper. When it's on, the very next OFF for this slot is skipped
-            once, then this clears itself automatically.
-          default: null
+          description: An input_boolean helper (required). When it's on, the very next OFF for this slot
+            is skipped once, then this clears itself automatically. If you don't want per-slot skip control,
+            just point every slot's skip fields at the same couple of shared input_booleans.
           selector:
             entity:
               filter:
@@ -180,9 +180,9 @@ blueprint:
             boolean: {}
         dhuhr_skip_next_on_entity:
           name: Dhuhr - 'skip next ON' helper
-          description: An input_boolean helper. When it's on, the very next ON for this slot is skipped
-            once, then this clears itself automatically.
-          default: null
+          description: An input_boolean helper (required). When it's on, the very next ON for this slot
+            is skipped once, then this clears itself automatically. If you don't want per-slot skip control,
+            just point every slot's skip fields at the same couple of shared input_booleans.
           selector:
             entity:
               filter:
@@ -233,9 +233,9 @@ blueprint:
             condition: {}
         dhuhr_skip_next_off_entity:
           name: Dhuhr - 'skip next OFF' helper
-          description: An input_boolean helper. When it's on, the very next OFF for this slot is skipped
-            once, then this clears itself automatically.
-          default: null
+          description: An input_boolean helper (required). When it's on, the very next OFF for this slot
+            is skipped once, then this clears itself automatically. If you don't want per-slot skip control,
+            just point every slot's skip fields at the same couple of shared input_booleans.
           selector:
             entity:
               filter:
@@ -292,9 +292,9 @@ blueprint:
             condition: {}
         asr_skip_next_on_entity:
           name: Asr - 'skip next ON' helper
-          description: An input_boolean helper. When it's on, the very next ON for this slot is skipped
-            once, then this clears itself automatically.
-          default: null
+          description: An input_boolean helper (required). When it's on, the very next ON for this slot
+            is skipped once, then this clears itself automatically. If you don't want per-slot skip control,
+            just point every slot's skip fields at the same couple of shared input_booleans.
           selector:
             entity:
               filter:
@@ -345,9 +345,9 @@ blueprint:
             condition: {}
         asr_skip_next_off_entity:
           name: Asr - 'skip next OFF' helper
-          description: An input_boolean helper. When it's on, the very next OFF for this slot is skipped
-            once, then this clears itself automatically.
-          default: null
+          description: An input_boolean helper (required). When it's on, the very next OFF for this slot
+            is skipped once, then this clears itself automatically. If you don't want per-slot skip control,
+            just point every slot's skip fields at the same couple of shared input_booleans.
           selector:
             entity:
               filter:
@@ -405,9 +405,9 @@ blueprint:
             condition: {}
         maghrib_skip_next_on_entity:
           name: Maghrib - 'skip next ON' helper
-          description: An input_boolean helper. When it's on, the very next ON for this slot is skipped
-            once, then this clears itself automatically.
-          default: null
+          description: An input_boolean helper (required). When it's on, the very next ON for this slot
+            is skipped once, then this clears itself automatically. If you don't want per-slot skip control,
+            just point every slot's skip fields at the same couple of shared input_booleans.
           selector:
             entity:
               filter:
@@ -458,9 +458,9 @@ blueprint:
             condition: {}
         maghrib_skip_next_off_entity:
           name: Maghrib - 'skip next OFF' helper
-          description: An input_boolean helper. When it's on, the very next OFF for this slot is skipped
-            once, then this clears itself automatically.
-          default: null
+          description: An input_boolean helper (required). When it's on, the very next OFF for this slot
+            is skipped once, then this clears itself automatically. If you don't want per-slot skip control,
+            just point every slot's skip fields at the same couple of shared input_booleans.
           selector:
             entity:
               filter:
@@ -517,9 +517,9 @@ blueprint:
             condition: {}
         isha_skip_next_on_entity:
           name: Isha - 'skip next ON' helper
-          description: An input_boolean helper. When it's on, the very next ON for this slot is skipped
-            once, then this clears itself automatically.
-          default: null
+          description: An input_boolean helper (required). When it's on, the very next ON for this slot
+            is skipped once, then this clears itself automatically. If you don't want per-slot skip control,
+            just point every slot's skip fields at the same couple of shared input_booleans.
           selector:
             entity:
               filter:
@@ -570,9 +570,9 @@ blueprint:
             condition: {}
         isha_skip_next_off_entity:
           name: Isha - 'skip next OFF' helper
-          description: An input_boolean helper. When it's on, the very next OFF for this slot is skipped
-            once, then this clears itself automatically.
-          default: null
+          description: An input_boolean helper (required). When it's on, the very next OFF for this slot
+            is skipped once, then this clears itself automatically. If you don't want per-slot skip control,
+            just point every slot's skip fields at the same couple of shared input_booleans.
           selector:
             entity:
               filter:
@@ -630,9 +630,9 @@ blueprint:
             condition: {}
         jumuah_skip_next_on_entity:
           name: Jumuah - 'skip next ON' helper
-          description: An input_boolean helper. When it's on, the very next ON for this slot is skipped
-            once, then this clears itself automatically.
-          default: null
+          description: An input_boolean helper (required). When it's on, the very next ON for this slot
+            is skipped once, then this clears itself automatically. If you don't want per-slot skip control,
+            just point every slot's skip fields at the same couple of shared input_booleans.
           selector:
             entity:
               filter:
@@ -683,9 +683,9 @@ blueprint:
             condition: {}
         jumuah_skip_next_off_entity:
           name: Jumuah - 'skip next OFF' helper
-          description: An input_boolean helper. When it's on, the very next OFF for this slot is skipped
-            once, then this clears itself automatically.
-          default: null
+          description: An input_boolean helper (required). When it's on, the very next OFF for this slot
+            is skipped once, then this clears itself automatically. If you don't want per-slot skip control,
+            just point every slot's skip fields at the same couple of shared input_booleans.
           selector:
             entity:
               filter:
@@ -743,9 +743,9 @@ blueprint:
             condition: {}
         taraweeh_skip_next_on_entity:
           name: Taraweeh - 'skip next ON' helper
-          description: An input_boolean helper. When it's on, the very next ON for this slot is skipped
-            once, then this clears itself automatically.
-          default: null
+          description: An input_boolean helper (required). When it's on, the very next ON for this slot
+            is skipped once, then this clears itself automatically. If you don't want per-slot skip control,
+            just point every slot's skip fields at the same couple of shared input_booleans.
           selector:
             entity:
               filter:
@@ -796,9 +796,9 @@ blueprint:
             condition: {}
         taraweeh_skip_next_off_entity:
           name: Taraweeh - 'skip next OFF' helper
-          description: An input_boolean helper. When it's on, the very next OFF for this slot is skipped
-            once, then this clears itself automatically.
-          default: null
+          description: An input_boolean helper (required). When it's on, the very next OFF for this slot
+            is skipped once, then this clears itself automatically. If you don't want per-slot skip control,
+            just point every slot's skip fields at the same couple of shared input_booleans.
           selector:
             entity:
               filter:
@@ -831,18 +831,16 @@ blueprint:
             action: {}
         skip_next_on_global_entity:
           name: Global 'skip next ON' helper
-          description: An input_boolean helper. When on, the very next ON across ANY slot is skipped once,
-            then clears itself.
-          default: null
+          description: An input_boolean helper (required). When on, the very next ON across ANY slot is
+            skipped once, then clears itself.
           selector:
             entity:
               filter:
               - domain: input_boolean
         skip_next_off_global_entity:
           name: Global 'skip next OFF' helper
-          description: An input_boolean helper. When on, the very next OFF across ANY slot is skipped
-            once, then clears itself.
-          default: null
+          description: An input_boolean helper (required). When on, the very next OFF across ANY slot
+            is skipped once, then clears itself.
           selector:
             entity:
               filter:
@@ -1143,13 +1141,11 @@ action:
           == ''on'')) }}'
       then:
       - action: input_boolean.turn_off
-        data:
-          entity_id: '{{ fajr_skip_next_on_entity if fajr_skip_next_on_entity not in [none, ''''] else
-            '''' }}'
+        target:
+          entity_id: !input 'fajr_skip_next_on_entity'
       - action: input_boolean.turn_off
-        data:
-          entity_id: '{{ skip_next_on_global_entity if skip_next_on_global_entity not in [none, '''']
-            else '''' }}'
+        target:
+          entity_id: !input 'skip_next_on_global_entity'
       else:
       - action: counter.increment
         target:
@@ -1190,13 +1186,11 @@ action:
           == ''on'')) }}'
       then:
       - action: input_boolean.turn_off
-        data:
-          entity_id: '{{ fajr_skip_next_off_entity if fajr_skip_next_off_entity not in [none, ''''] else
-            '''' }}'
+        target:
+          entity_id: !input 'fajr_skip_next_off_entity'
       - action: input_boolean.turn_off
-        data:
-          entity_id: '{{ skip_next_off_global_entity if skip_next_off_global_entity not in [none, '''']
-            else '''' }}'
+        target:
+          entity_id: !input 'skip_next_off_global_entity'
       else:
       - action: counter.decrement
         target:
@@ -1229,13 +1223,11 @@ action:
           == ''on'')) }}'
       then:
       - action: input_boolean.turn_off
-        data:
-          entity_id: '{{ dhuhr_skip_next_on_entity if dhuhr_skip_next_on_entity not in [none, ''''] else
-            '''' }}'
+        target:
+          entity_id: !input 'dhuhr_skip_next_on_entity'
       - action: input_boolean.turn_off
-        data:
-          entity_id: '{{ skip_next_on_global_entity if skip_next_on_global_entity not in [none, '''']
-            else '''' }}'
+        target:
+          entity_id: !input 'skip_next_on_global_entity'
       else:
       - action: counter.increment
         target:
@@ -1276,13 +1268,11 @@ action:
           == ''on'')) }}'
       then:
       - action: input_boolean.turn_off
-        data:
-          entity_id: '{{ dhuhr_skip_next_off_entity if dhuhr_skip_next_off_entity not in [none, '''']
-            else '''' }}'
+        target:
+          entity_id: !input 'dhuhr_skip_next_off_entity'
       - action: input_boolean.turn_off
-        data:
-          entity_id: '{{ skip_next_off_global_entity if skip_next_off_global_entity not in [none, '''']
-            else '''' }}'
+        target:
+          entity_id: !input 'skip_next_off_global_entity'
       else:
       - action: counter.decrement
         target:
@@ -1315,13 +1305,11 @@ action:
           == ''on'')) }}'
       then:
       - action: input_boolean.turn_off
-        data:
-          entity_id: '{{ asr_skip_next_on_entity if asr_skip_next_on_entity not in [none, ''''] else ''''
-            }}'
+        target:
+          entity_id: !input 'asr_skip_next_on_entity'
       - action: input_boolean.turn_off
-        data:
-          entity_id: '{{ skip_next_on_global_entity if skip_next_on_global_entity not in [none, '''']
-            else '''' }}'
+        target:
+          entity_id: !input 'skip_next_on_global_entity'
       else:
       - action: counter.increment
         target:
@@ -1362,13 +1350,11 @@ action:
           == ''on'')) }}'
       then:
       - action: input_boolean.turn_off
-        data:
-          entity_id: '{{ asr_skip_next_off_entity if asr_skip_next_off_entity not in [none, ''''] else
-            '''' }}'
+        target:
+          entity_id: !input 'asr_skip_next_off_entity'
       - action: input_boolean.turn_off
-        data:
-          entity_id: '{{ skip_next_off_global_entity if skip_next_off_global_entity not in [none, '''']
-            else '''' }}'
+        target:
+          entity_id: !input 'skip_next_off_global_entity'
       else:
       - action: counter.decrement
         target:
@@ -1401,13 +1387,11 @@ action:
           == ''on'')) }}'
       then:
       - action: input_boolean.turn_off
-        data:
-          entity_id: '{{ maghrib_skip_next_on_entity if maghrib_skip_next_on_entity not in [none, '''']
-            else '''' }}'
+        target:
+          entity_id: !input 'maghrib_skip_next_on_entity'
       - action: input_boolean.turn_off
-        data:
-          entity_id: '{{ skip_next_on_global_entity if skip_next_on_global_entity not in [none, '''']
-            else '''' }}'
+        target:
+          entity_id: !input 'skip_next_on_global_entity'
       else:
       - action: counter.increment
         target:
@@ -1448,13 +1432,11 @@ action:
           == ''on'')) }}'
       then:
       - action: input_boolean.turn_off
-        data:
-          entity_id: '{{ maghrib_skip_next_off_entity if maghrib_skip_next_off_entity not in [none, '''']
-            else '''' }}'
+        target:
+          entity_id: !input 'maghrib_skip_next_off_entity'
       - action: input_boolean.turn_off
-        data:
-          entity_id: '{{ skip_next_off_global_entity if skip_next_off_global_entity not in [none, '''']
-            else '''' }}'
+        target:
+          entity_id: !input 'skip_next_off_global_entity'
       else:
       - action: counter.decrement
         target:
@@ -1487,13 +1469,11 @@ action:
           == ''on'')) }}'
       then:
       - action: input_boolean.turn_off
-        data:
-          entity_id: '{{ isha_skip_next_on_entity if isha_skip_next_on_entity not in [none, ''''] else
-            '''' }}'
+        target:
+          entity_id: !input 'isha_skip_next_on_entity'
       - action: input_boolean.turn_off
-        data:
-          entity_id: '{{ skip_next_on_global_entity if skip_next_on_global_entity not in [none, '''']
-            else '''' }}'
+        target:
+          entity_id: !input 'skip_next_on_global_entity'
       else:
       - action: counter.increment
         target:
@@ -1534,13 +1514,11 @@ action:
           == ''on'')) }}'
       then:
       - action: input_boolean.turn_off
-        data:
-          entity_id: '{{ isha_skip_next_off_entity if isha_skip_next_off_entity not in [none, ''''] else
-            '''' }}'
+        target:
+          entity_id: !input 'isha_skip_next_off_entity'
       - action: input_boolean.turn_off
-        data:
-          entity_id: '{{ skip_next_off_global_entity if skip_next_off_global_entity not in [none, '''']
-            else '''' }}'
+        target:
+          entity_id: !input 'skip_next_off_global_entity'
       else:
       - action: counter.decrement
         target:
@@ -1573,13 +1551,11 @@ action:
           == ''on'')) }}'
       then:
       - action: input_boolean.turn_off
-        data:
-          entity_id: '{{ jumuah_skip_next_on_entity if jumuah_skip_next_on_entity not in [none, '''']
-            else '''' }}'
+        target:
+          entity_id: !input 'jumuah_skip_next_on_entity'
       - action: input_boolean.turn_off
-        data:
-          entity_id: '{{ skip_next_on_global_entity if skip_next_on_global_entity not in [none, '''']
-            else '''' }}'
+        target:
+          entity_id: !input 'skip_next_on_global_entity'
       else:
       - action: counter.increment
         target:
@@ -1620,13 +1596,11 @@ action:
           == ''on'')) }}'
       then:
       - action: input_boolean.turn_off
-        data:
-          entity_id: '{{ jumuah_skip_next_off_entity if jumuah_skip_next_off_entity not in [none, '''']
-            else '''' }}'
+        target:
+          entity_id: !input 'jumuah_skip_next_off_entity'
       - action: input_boolean.turn_off
-        data:
-          entity_id: '{{ skip_next_off_global_entity if skip_next_off_global_entity not in [none, '''']
-            else '''' }}'
+        target:
+          entity_id: !input 'skip_next_off_global_entity'
       else:
       - action: counter.decrement
         target:
@@ -1659,13 +1633,11 @@ action:
           == ''on'')) }}'
       then:
       - action: input_boolean.turn_off
-        data:
-          entity_id: '{{ taraweeh_skip_next_on_entity if taraweeh_skip_next_on_entity not in [none, '''']
-            else '''' }}'
+        target:
+          entity_id: !input 'taraweeh_skip_next_on_entity'
       - action: input_boolean.turn_off
-        data:
-          entity_id: '{{ skip_next_on_global_entity if skip_next_on_global_entity not in [none, '''']
-            else '''' }}'
+        target:
+          entity_id: !input 'skip_next_on_global_entity'
       else:
       - action: counter.increment
         target:
@@ -1706,13 +1678,11 @@ action:
           == ''on'')) }}'
       then:
       - action: input_boolean.turn_off
-        data:
-          entity_id: '{{ taraweeh_skip_next_off_entity if taraweeh_skip_next_off_entity not in [none,
-            ''''] else '''' }}'
+        target:
+          entity_id: !input 'taraweeh_skip_next_off_entity'
       - action: input_boolean.turn_off
-        data:
-          entity_id: '{{ skip_next_off_global_entity if skip_next_off_global_entity not in [none, '''']
-            else '''' }}'
+        target:
+          entity_id: !input 'skip_next_off_global_entity'
       else:
       - action: counter.decrement
         target:
